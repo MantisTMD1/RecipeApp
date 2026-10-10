@@ -153,3 +153,24 @@ featureSlide("5-discover.png",
              headline: "Discover something new",
              caption: "Fresh recipes from around the world, every time you open the app.",
              phones: ["AppStore/screenshots/1-discover.png"])
+
+// Product page header (3840 x 1646): no text, since the App Store overlays the app's name and icon.
+do {
+    let headerWidth = 3840, headerHeight = 1646
+    let hw = CGFloat(headerWidth), hh = CGFloat(headerHeight)
+    let ctx = CGContext(data: nil, width: headerWidth, height: headerHeight, bitsPerComponent: 8, bytesPerRow: 0,
+                        space: space, bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)!
+    let bg = CGGradient(colorsSpace: space, colors: [rgb(20, 104, 58), rgb(96, 190, 104)] as CFArray, locations: [0, 1])!
+    ctx.drawLinearGradient(bg, start: CGPoint(x: 0, y: 0), end: CGPoint(x: hw, y: hh),
+                           options: [.drawsBeforeStartLocation, .drawsAfterEndLocation])
+    // Five phones in a gentle arc; the outer ones sit lower and smaller, the centre one in front.
+    let screens = ["5-kitchen", "2-recipe-ideas", "1-discover", "3-recipe-detail", "4-shopping-list"]
+    let xs: [CGFloat] = [0.14, 0.32, 0.5, 0.68, 0.86]
+    let heights: [CGFloat] = [1150, 1290, 1400, 1290, 1150]
+    let ys: [CGFloat] = [0.45, 0.48, 0.5, 0.48, 0.45]
+    for i in [0, 4, 1, 3, 2] {
+        drawPhone(ctx, load("AppStore/screenshots/\(screens[i]).png"),
+                  center: CGPoint(x: hw * xs[i], y: hh * ys[i]), height: heights[i])
+    }
+    save(ctx, "header-3840x1646.png")
+}
