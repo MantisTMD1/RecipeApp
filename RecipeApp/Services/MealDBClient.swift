@@ -4,12 +4,12 @@ import Foundation
 struct MealDBClient {
     static let shared = MealDBClient()
 
-    /// "1" is the free development key. Replace it with a supporter key before publishing.
-    private let apiKey = "1"
     private let session: URLSession = .shared
 
+    /// v2 is TheMealDB's supporter API: the full database plus premium endpoints.
+    /// The key is defined in APIKey.swift, which is kept out of git.
     private var baseURL: URL {
-        URL(string: "https://www.themealdb.com/api/json/v1/\(apiKey)/")!
+        URL(string: "https://www.themealdb.com/api/json/v2/\(APIKey.mealDB)/")!
     }
 
     func categories() async throws -> [MealCategory] {
@@ -31,7 +31,7 @@ struct MealDBClient {
         return response.meals ?? []
     }
 
-    /// Meals that use the given ingredient. The free key only supports one ingredient per request.
+    /// Meals that use the given ingredient.
     func meals(withIngredient ingredient: String) async throws -> [MealSummary] {
         struct Response: Decodable { let meals: [MealSummary]? }
         let response: Response = try await get("filter.php", query: ["i": ingredient])
@@ -48,6 +48,20 @@ struct MealDBClient {
         struct Response: Decodable { let meals: [Meal]? }
         let response: Response = try await get("lookup.php", query: ["i": id])
         return response.meals?.first
+    }
+
+    /// Ten random full recipes in one request (supporter API only).
+    func randomSelection() async throws -> [Meal] {
+        struct Response: Decodable { let meals: [Meal]? }
+        let response: Response = try await get("randomselection.php")
+        return response.meals ?? []
+    }
+
+    /// The ten most recently added recipes (supporter API only).
+    func latestMeals() async throws -> [Meal] {
+        struct Response: Decodable { let meals: [Meal]? }
+        let response: Response = try await get("latest.php")
+        return response.meals ?? []
     }
 
     func randomMeal() async throws -> Meal? {
