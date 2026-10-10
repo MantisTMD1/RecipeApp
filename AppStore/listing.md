@@ -13,8 +13,8 @@ Copy these into App Store Connect when you create the app. Character limits are 
 | Primary category | Food & Drink |
 | Secondary category | Lifestyle |
 | Price | Free |
-| Privacy policy URL | *(your hosted privacy.html)* |
-| Support URL | *(your hosted index.html)* |
+| Privacy policy URL | https://mantistmd1.github.io/recipe-rescue/privacy.html |
+| Support URL | https://mantistmd1.github.io/recipe-rescue/ |
 
 ## Promotional text (170 max)
 
