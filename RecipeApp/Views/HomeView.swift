@@ -1,11 +1,9 @@
 import SwiftUI
 
-/// Home screen: a featured random recipe, a category row, and a grid of more random picks.
+/// Home screen: a featured random recipe, categories, the newest recipes, and more random picks.
 struct HomeView: View {
-    /// How many random recipes to show. The free API returns one per request.
-    private static let pickCount = 11
-
     @State private var meals: [Meal] = []
+    @State private var latest: [Meal] = []
     @State private var categories: [MealCategory] = []
     @State private var errorMessage: String?
     @State private var isShuffling = false
@@ -35,6 +33,26 @@ struct HomeView: View {
                                     ForEach(categories) { category in
                                         NavigationLink(value: category) {
                                             CategoryChip(category: category)
+                                        }
+                                        .buttonStyle(.plain)
+                                    }
+                                }
+                                .padding(.horizontal)
+                            }
+                        }
+                    }
+
+                    if !latest.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("New Recipes")
+                                .font(.title2.bold())
+                                .padding(.horizontal)
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(alignment: .top, spacing: 16) {
+                                    ForEach(latest) { meal in
+                                        NavigationLink(value: meal.summary) {
+                                            RecipeCard(meal: meal)
+                                                .frame(width: 160)
                                         }
                                         .buttonStyle(.plain)
                                     }
@@ -104,10 +122,12 @@ struct HomeView: View {
     }
 
     private func load() async {
-        async let picks = Self.randomMeals(count: Self.pickCount)
+        async let picks = Self.randomMeals()
+        async let newest = try? MealDBClient.shared.latestMeals()
         if categories.isEmpty {
             categories = (try? await MealDBClient.shared.categories()) ?? []
         }
+        latest = await newest ?? []
         let result = await picks
         if result.isEmpty {
             errorMessage = "Check your connection and try again."
@@ -120,25 +140,20 @@ struct HomeView: View {
     private func shuffle() async {
         isShuffling = true
         defer { isShuffling = false }
-        let result = await Self.randomMeals(count: Self.pickCount)
+        let result = await Self.randomMeals()
         if !result.isEmpty {
             withAnimation { meals = result }
         }
     }
 
-    /// Fetches random recipes in parallel and drops duplicates.
-    private static func randomMeals(count: Int) async -> [Meal] {
-        await withTaskGroup(of: Meal?.self) { group in
-            for _ in 0..<count {
-                group.addTask { try? await MealDBClient.shared.randomMeal() }
-            }
-            var seen = Set<String>()
-            var meals: [Meal] = []
-            for await meal in group {
-                if let meal, seen.insert(meal.id).inserted { meals.append(meal) }
-            }
-            return meals
-        }
+    /// One featured recipe plus an even number for the two-column grid. Each random selection
+    /// returns ten recipes, so two run in parallel and duplicates are dropped.
+    private static func randomMeals() async -> [Meal] {
+        async let first = try? MealDBClient.shared.randomSelection()
+        async let second = try? MealDBClient.shared.randomSelection()
+        var seen = Set<String>()
+        let unique = ((await first ?? []) + (await second ?? [])).filter { seen.insert($0.id).inserted }
+        return Array(unique.prefix(11))
     }
 }
 
@@ -204,11 +219,10 @@ private struct RecipeCard: View {
             Text(meal.name)
                 .font(.headline)
                 .lineLimit(2, reservesSpace: true)
-            if let area = meal.area {
-                Text(area)
-                    .font(.subheadline)
-                    .foregroundStyle(.secondary)
-            }
+            // Always reserve the line so cards without a cuisine stay aligned in the grid.
+            Text(meal.area ?? " ")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
         }
         .contentShape(.rect)
     }

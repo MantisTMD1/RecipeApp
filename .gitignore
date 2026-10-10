@@ -3,3 +3,6 @@ xcuserdata/
 DerivedData/
 build/
 *.xcuserstate
+
+# Local secrets (see RecipeApp/Services/APIKey.example.swift)
+RecipeApp/Services/APIKey.swift
