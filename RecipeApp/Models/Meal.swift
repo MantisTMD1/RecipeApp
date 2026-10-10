@@ -105,9 +105,20 @@ struct Meal: Decodable, Identifiable, Hashable {
         youtubeURL = string("strYoutube").flatMap(URL.init(string:))
         sourceURL = string("strSource").flatMap(URL.init(string:))
 
-        ingredients = (1...20).compactMap { i in
-            guard let name = string("strIngredient\(i)") else { return nil }
-            return Ingredient(name: name, measure: string("strMeasure\(i)") ?? "")
+        // Some recipes list the same ingredient twice (e.g. for a marinade and a sauce);
+        // merge those into one entry with both measures.
+        var merged: [Ingredient] = []
+        for i in 1...20 {
+            guard let name = string("strIngredient\(i)") else { continue }
+            let measure = string("strMeasure\(i)") ?? ""
+            if let index = merged.firstIndex(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) {
+                let existing = merged[index].measure
+                let combined = [existing, measure].filter { !$0.isEmpty }.joined(separator: " + ")
+                merged[index] = Ingredient(name: merged[index].name, measure: combined)
+            } else {
+                merged.append(Ingredient(name: name, measure: measure))
+            }
         }
+        ingredients = merged
     }
 }
