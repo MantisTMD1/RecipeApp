@@ -1,6 +1,6 @@
-# RecipeApp
+# Recipe Rescue
 
-A SwiftUI recipe app for iOS, powered by [TheMealDB](https://www.themealdb.com).
+A SwiftUI recipe app for iOS that turns the ingredients you already have into dinner ideas. Recipe data from [TheMealDB](https://www.themealdb.com).
 
 ## Features
 
@@ -8,6 +8,7 @@ A SwiftUI recipe app for iOS, powered by [TheMealDB](https://www.themealdb.com).
 - **Kitchen:** add the ingredients you have and get recipe ideas ranked by what you're missing
 - **Shopping list:** add missing ingredients from any recipe, check them off, and move them to your kitchen
 - **Favorites and search**
+- A personal welcome greeting, set on first launch and editable in Settings
 - Dark, light or system appearance
 
 ## Requirements
@@ -17,9 +18,9 @@ A SwiftUI recipe app for iOS, powered by [TheMealDB](https://www.themealdb.com).
 
 ## Getting started
 
-Open `RecipeApp.xcodeproj` in Xcode and run the `RecipeApp` scheme on a simulator or device.
-
-The app uses TheMealDB's free development key (`1`). Before publishing to the App Store, replace it with a supporter key in `RecipeApp/Services/MealDBClient.swift`.
+1. Copy `RecipeApp/Services/APIKey.example.swift` to `RecipeApp/Services/APIKey.swift` (this file is ignored by git).
+2. In the copy, uncomment the `APIKey` enum and set `mealDB` to your TheMealDB key. The free development key `1` works for local testing; App Store releases need a [supporter key](https://www.themealdb.com/api.php).
+3. Open `RecipeApp.xcodeproj` in Xcode and run the `RecipeApp` scheme on a simulator or device.
 
 ## App icon
 
