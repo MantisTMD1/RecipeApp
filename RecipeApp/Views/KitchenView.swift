@@ -85,6 +85,7 @@ struct IngredientPickerView: View {
     @State private var ingredients: [IngredientInfo] = []
     @State private var query = ""
     @State private var errorMessage: String?
+    @FocusState private var isSearching: Bool
 
     private var pantryNames: Set<String> { Set(pantry.map { $0.name.lowercased() }) }
 
@@ -124,6 +125,7 @@ struct IngredientPickerView: View {
                 }
                 .buttonStyle(.plain)
             }
+            .scrollDismissesKeyboard(.immediately)
             .overlay {
                 if let errorMessage {
                     ContentUnavailableView("Couldn't Load Ingredients", systemImage: "wifi.exclamationmark", description: Text(errorMessage))
@@ -133,7 +135,28 @@ struct IngredientPickerView: View {
                     ContentUnavailableView.search(text: query)
                 }
             }
-            .searchable(text: $query, placement: .navigationBarDrawer(displayMode: .always), prompt: "Search ingredients")
+            // A custom field instead of .searchable: the system search bar hides the
+            // navigation bar (and its Done button) while the user is typing.
+            .safeAreaInset(edge: .top) {
+                HStack(spacing: 8) {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundStyle(.secondary)
+                    TextField("Search ingredients", text: $query)
+                        .focused($isSearching)
+                        .autocorrectionDisabled()
+                        .submitLabel(.done)
+                    if !query.isEmpty {
+                        Button("Clear Search", systemImage: "xmark.circle.fill") { query = "" }
+                            .labelStyle(.iconOnly)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(.background.secondary, in: .capsule)
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+            }
             .navigationTitle("Add Ingredients")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
