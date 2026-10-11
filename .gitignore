@@ -6,3 +6,5 @@ build/
 
 # Local secrets (see RecipeApp/Services/APIKey.example.swift)
 RecipeApp/Services/APIKey.swift
+AppStore/preview/raw.mov
+AppStore/preview/silence.wav
