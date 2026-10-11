@@ -47,6 +47,12 @@ Recipe data from TheMealDB.
 
 recipes,cooking,pantry,ingredients,meal ideas,dinner,shopping list,leftovers,kitchen,food,cookbook
 
+## What's New (version 1.1)
+
+- Recipe Rescue now greets you by name. Add or change your name anytime in Settings.
+- A fresh green look to match the app icon.
+- The Done button now stays visible while you search for ingredients.
+
 ## What's New (version 1.0)
 
 First release.
