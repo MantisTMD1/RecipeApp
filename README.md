@@ -29,3 +29,7 @@ The icon is drawn in code. To regenerate it after editing `Design/make_icon.swif
 ```bash
 swift Design/make_icon.swift RecipeApp/Assets.xcassets/AppIcon.appiconset
 ```
+
+## License
+
+The code is released under the [MIT License](LICENSE). Recipe text and images come from TheMealDB and are not covered by this license.
