@@ -27,10 +27,25 @@ struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("appearance") private var appearance: Appearance = .dark
     @AppStorage("assumeStaples") private var assumeStaples = true
+    @AppStorage(UserName.storageKey) private var userName = ""
 
     var body: some View {
         NavigationStack {
             Form {
+                Section {
+                    TextField("Your name", text: $userName)
+                        .textContentType(.name)
+                        .textInputAutocapitalization(.words)
+                        .autocorrectionDisabled()
+                        .onChange(of: userName) { _, newValue in
+                            if newValue.count > UserName.maxLength { userName = String(newValue.prefix(UserName.maxLength)) }
+                        }
+                } header: {
+                    Text("Your Name")
+                } footer: {
+                    Text("Used for your welcome message. Leave it blank to turn the greeting off. It never leaves this device.")
+                }
+
                 Section("Appearance") {
                     Picker("Appearance", selection: $appearance) {
                         ForEach(Appearance.allCases) { Text($0.title).tag($0) }
