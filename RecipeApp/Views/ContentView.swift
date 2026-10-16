@@ -1,6 +1,10 @@
 import SwiftUI
 import SwiftData
 
+enum AppTab: Hashable {
+    case home, kitchen, list, saved, search
+}
+
 struct ContentView: View {
     @Query(filter: #Predicate<ShoppingItem> { !$0.isChecked }) private var toBuy: [ShoppingItem]
     @AppStorage(UserName.storageKey) private var userName = ""
@@ -9,25 +13,31 @@ struct ContentView: View {
 
     @State private var greeting: String?
     @State private var wasInBackground = false
+    @State private var selectedTab: AppTab = .home
+    /// Where the Search tab's close button returns to.
+    @State private var tabBeforeSearch: AppTab = .home
 
     var body: some View {
-        TabView {
-            Tab("Home", systemImage: "house") {
+        TabView(selection: $selectedTab) {
+            Tab("Home", systemImage: "house", value: .home) {
                 HomeView()
             }
-            Tab("Kitchen", systemImage: "refrigerator") {
+            Tab("Kitchen", systemImage: "refrigerator", value: .kitchen) {
                 KitchenView()
             }
-            Tab("List", systemImage: "cart") {
+            Tab("List", systemImage: "cart", value: .list) {
                 ShoppingListView()
             }
             .badge(toBuy.count)
-            Tab("Saved", systemImage: "heart") {
+            Tab("Saved", systemImage: "heart", value: .saved) {
                 FavoritesView()
             }
-            Tab(role: .search) {
-                SearchView()
+            Tab(value: .search, role: .search) {
+                SearchView { selectedTab = tabBeforeSearch }
             }
+        }
+        .onChange(of: selectedTab) { oldTab, _ in
+            if oldTab != .search { tabBeforeSearch = oldTab }
         }
         .overlay(alignment: .top) {
             if let greeting {

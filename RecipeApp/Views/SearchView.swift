@@ -2,6 +2,9 @@ import SwiftUI
 import SwiftData
 
 struct SearchView: View {
+    /// Leaves the Search tab (it hides the tab bar, so it needs its own way out).
+    var onClose: () -> Void = {}
+
     @State private var query = ""
     @State private var results: [Meal] = []
     @State private var isSearching = false
@@ -36,6 +39,11 @@ struct SearchView: View {
                 MealDetailView(summary: meal)
             }
             .searchable(text: $query, prompt: "Recipes")
+            .toolbar {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button("Close Search", systemImage: "xmark", action: onClose)
+                }
+            }
             .task(id: "\(query)|\(diet.rawValue)") {
                 // Debounce typing; the task is cancelled when the query changes.
                 let term = query.trimmingCharacters(in: .whitespaces)
