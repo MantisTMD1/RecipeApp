@@ -20,22 +20,23 @@ struct ContentView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             Tab("Home", systemImage: "house", value: .home) {
-                HomeView()
+                HomeView().recipeZoomScope()
             }
             Tab("Kitchen", systemImage: "refrigerator", value: .kitchen) {
-                KitchenView()
+                KitchenView().recipeZoomScope()
             }
             Tab("List", systemImage: "cart", value: .list) {
                 ShoppingListView()
             }
             .badge(toBuy.count)
             Tab("Saved", systemImage: "heart", value: .saved) {
-                FavoritesView()
+                FavoritesView().recipeZoomScope()
             }
             Tab(value: .search, role: .search) {
-                SearchView { selectedTab = tabBeforeSearch }
+                SearchView { selectedTab = tabBeforeSearch }.recipeZoomScope()
             }
         }
+        .environment(\.selectTab) { selectedTab = $0 }
         .onChange(of: selectedTab) { oldTab, _ in
             if oldTab != .search { tabBeforeSearch = oldTab }
         }

@@ -37,6 +37,7 @@ struct SearchView: View {
             .navigationTitle("Search")
             .navigationDestination(for: MealSummary.self) { meal in
                 MealDetailView(summary: meal)
+                    .recipeZoomDestination(id: meal.id)
             }
             .searchable(text: $query, prompt: "Recipes")
             .toolbar {

@@ -13,6 +13,7 @@ struct MealRow: View {
             }
             .frame(width: 60, height: 60)
             .clipShape(.rect(cornerRadius: 10))
+            .recipeZoomSource(id: meal.id)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(meal.name)

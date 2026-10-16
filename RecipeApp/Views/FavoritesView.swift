@@ -7,6 +7,7 @@ struct FavoritesView: View {
     @Query(sort: \FavoriteMeal.dateAdded, order: .reverse) private var favorites: [FavoriteMeal]
     @Query(sort: \CustomRecipe.dateModified, order: .reverse) private var myRecipes: [CustomRecipe]
     @State private var showingEditor = false
+    @Environment(\.selectTab) private var selectTab
 
     var body: some View {
         NavigationStack {
@@ -40,19 +41,34 @@ struct FavoritesView: View {
             }
             .overlay {
                 if favorites.isEmpty && myRecipes.isEmpty {
-                    ContentUnavailableView {
-                        Label("Nothing Saved Yet", systemImage: "heart")
-                    } description: {
-                        Text("Tap the heart on any recipe to save it here, or add your own family recipes.")
-                    } actions: {
-                        Button("Create a Recipe") { showingEditor = true }
-                            .buttonStyle(.borderedProminent)
+                    EmptyStateView(systemImage: "heart.fill",
+                                   accents: ["book.closed.fill", "fork.knife", "star.fill"],
+                                   title: "Nothing Saved Yet",
+                                   message: "Tap the heart on any recipe to keep it here, or add your own family recipes.") {
+                        Button {
+                            showingEditor = true
+                        } label: {
+                            Label("Create a Recipe", systemImage: "square.and.pencil")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.borderedProminent)
+                        .controlSize(.large)
+                        Button {
+                            selectTab(.home)
+                        } label: {
+                            Label("Browse Recipes", systemImage: "fork.knife")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.large)
                     }
+                    .background(Color(.systemBackground))
                 }
             }
             .navigationTitle("Saved")
             .navigationDestination(for: MealSummary.self) { meal in
                 MealDetailView(summary: meal)
+                    .recipeZoomDestination(id: meal.id)
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
