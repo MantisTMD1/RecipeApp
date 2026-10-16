@@ -47,9 +47,9 @@ enum MealType: String, CaseIterable, Identifiable {
 
 extension MealDBClient {
     /// Every recipe that fits a meal type, without duplicates.
-    func meals(for type: MealType) async -> [MealSummary] {
+    func meals(for type: MealType, diet: DietFilter = DietFilter()) async -> [MealSummary] {
         await withTaskGroup(of: [MealSummary].self) { group in
-            for category in type.categories {
+            for category in type.categories where diet.allowsCategory(category) {
                 group.addTask { (try? await meals(inCategory: category)) ?? [] }
             }
             for term in type.nameSearches {

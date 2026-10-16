@@ -5,6 +5,8 @@ struct SearchView: View {
     @State private var results: [Meal] = []
     @State private var isSearching = false
     @State private var errorMessage: String?
+    @State private var hiddenCount = 0
+    @AppStorage(DietFilter.storageKey) private var diet = DietFilter()
 
     var body: some View {
         NavigationStack {
@@ -20,6 +22,9 @@ struct SearchView: View {
                     ContentUnavailableView("Search Failed", systemImage: "wifi.exclamationmark", description: Text(errorMessage))
                 } else if query.isEmpty {
                     ContentUnavailableView("Search Recipes", systemImage: "magnifyingglass", description: Text("Try “chicken”, “pasta”, or “cake”."))
+                } else if results.isEmpty && hiddenCount > 0 {
+                    ContentUnavailableView("No \(diet.summary) Results", systemImage: "leaf",
+                                           description: Text("\(hiddenCount) recipes for “\(query)” don't fit your diet settings."))
                 } else if results.isEmpty {
                     ContentUnavailableView.search(text: query)
                 }
@@ -29,7 +34,7 @@ struct SearchView: View {
                 MealDetailView(summary: meal)
             }
             .searchable(text: $query, prompt: "Recipes")
-            .task(id: query) {
+            .task(id: "\(query)|\(diet.rawValue)") {
                 // Debounce typing; the task is cancelled when the query changes.
                 let term = query.trimmingCharacters(in: .whitespaces)
                 guard !term.isEmpty else {
@@ -44,7 +49,8 @@ struct SearchView: View {
                 do {
                     let found = try await MealDBClient.shared.search(term)
                     guard !Task.isCancelled else { return }
-                    results = found
+                    results = found.filter(diet.allows)
+                    hiddenCount = found.count - results.count
                     errorMessage = nil
                 } catch is CancellationError {
                 } catch let error as URLError where error.code == .cancelled {

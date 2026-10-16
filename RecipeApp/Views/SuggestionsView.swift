@@ -6,6 +6,7 @@ struct SuggestionsView: View {
     @Query private var pantry: [PantryItem]
     @Environment(\.modelContext) private var modelContext
     @AppStorage("assumeStaples") private var assumeStaples = true
+    @AppStorage(DietFilter.storageKey) private var diet = DietFilter()
     @State private var suggestions: [RecipeSuggestion] = []
     @State private var isLoading = true
     @State private var errorMessage: String?
@@ -38,7 +39,7 @@ struct SuggestionsView: View {
                 Text("Salt, pepper, oil, flour, sugar, butter and water")
             }
         }
-        .task(id: "\(assumeStaples)|\(pantryNames)") { await load() }
+        .task(id: "\(assumeStaples)|\(pantryNames)|\(diet.rawValue)") { await load() }
         .refreshable { await load() }
     }
 
@@ -70,6 +71,7 @@ struct SuggestionsView: View {
         defer { isLoading = false }
         do {
             suggestions = try await RecipeMatcher.suggestions(for: pantryNames, assumeStaples: assumeStaples)
+                .filter { diet.allows($0.meal) }
             errorMessage = nil
         } catch is CancellationError {
         } catch {
