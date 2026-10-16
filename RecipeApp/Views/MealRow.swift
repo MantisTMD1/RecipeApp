@@ -30,6 +30,6 @@ struct MealRow: View {
 
     /// TheMealDB serves small thumbnails by appending "/preview" to the image URL.
     private static func previewURL(_ url: URL) -> URL {
-        url.appending(path: "preview")
+        url.isFileURL ? url : url.appending(path: "preview")
     }
 }

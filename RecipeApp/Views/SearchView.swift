@@ -1,4 +1,5 @@
 import SwiftUI
+import SwiftData
 
 struct SearchView: View {
     @State private var query = ""
@@ -7,6 +8,7 @@ struct SearchView: View {
     @State private var errorMessage: String?
     @State private var hiddenCount = 0
     @AppStorage(DietFilter.storageKey) private var diet = DietFilter()
+    @Query private var myRecipes: [CustomRecipe]
 
     var body: some View {
         NavigationStack {
@@ -47,7 +49,8 @@ struct SearchView: View {
                 isSearching = true
                 defer { isSearching = false }
                 do {
-                    let found = try await MealDBClient.shared.search(term)
+                    let own = myRecipes.map(\.asMeal).filter { $0.name.localizedCaseInsensitiveContains(term) }
+                    let found = own + (try await MealDBClient.shared.search(term))
                     guard !Task.isCancelled else { return }
                     results = found.filter(diet.allows)
                     hiddenCount = found.count - results.count

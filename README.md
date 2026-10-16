@@ -7,6 +7,11 @@ A SwiftUI recipe app for iOS that turns the ingredients you already have into di
 - **Discover:** a featured recipe and a grid of random picks, with shuffle and categories
 - **Kitchen:** add the ingredients you have and get recipe ideas ranked by what you're missing
 - **Shopping list:** add missing ingredients from any recipe, check them off, and move them to your kitchen
+- **Your own recipes:** add family recipes with a photo; they work everywhere, including recipe ideas
+- **Cooking mode:** one large step at a time, screen kept awake, tap-to-start timers
+- **Recipe scaling:** ½×, 1×, 2× or 3× amounts
+- **Diet filters:** vegetarian, vegan, gluten-free and dairy-free
+- **Estimated cooking times** and breakfast/lunch/dinner/dessert browsing
 - **Favorites and search**
 - A personal welcome greeting, set on first launch and editable in Settings
 - Dark, light or system appearance

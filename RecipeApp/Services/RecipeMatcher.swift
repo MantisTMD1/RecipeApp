@@ -61,7 +61,8 @@ enum RecipeMatcher {
     /// How many candidate recipes to load in full. Each one is a separate request.
     static let detailLimit = 25
 
-    static func suggestions(for pantry: [String], assumeStaples: Bool) async throws -> [RecipeSuggestion] {
+    /// `ownRecipes` are the user's recipes; any that use at least one pantry item are included.
+    static func suggestions(for pantry: [String], assumeStaples: Bool, ownRecipes: [Meal] = []) async throws -> [RecipeSuggestion] {
         guard !pantry.isEmpty else { return [] }
         let client = MealDBClient.shared
 
@@ -96,6 +97,8 @@ enum RecipeMatcher {
 
         // 3. Score each recipe by what's missing.
         let matcher = IngredientMatcher(pantry: pantry, assumeStaples: assumeStaples)
+        let pantryOnly = IngredientMatcher(pantry: pantry, assumeStaples: false)
+        meals += ownRecipes.filter { recipe in recipe.ingredients.contains { pantryOnly.has($0.name) } }
         return meals
             .map { meal in
                 let have = meal.ingredients.filter { matcher.has($0.name) }

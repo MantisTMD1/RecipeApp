@@ -10,6 +10,6 @@ struct RecipeAppApp: App {
             ContentView()
                 .preferredColorScheme(appearance.colorScheme)
         }
-        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self])
+        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self, CustomRecipe.self])
     }
 }

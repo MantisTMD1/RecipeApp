@@ -361,7 +361,7 @@ private struct CategoryChip: View {
 
 #Preview {
     HomeView()
-        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self], inMemory: true)
+        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self, CustomRecipe.self], inMemory: true)
 }
 
 /// "All · Breakfast · Lunch · Dinner · Dessert" buttons under the title.

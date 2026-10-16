@@ -6,6 +6,9 @@ struct MealDetailView: View {
 
     @Environment(\.modelContext) private var modelContext
     @Query private var matchingFavorites: [FavoriteMeal]
+    @Query private var customMatches: [CustomRecipe]
+    @Environment(\.dismiss) private var dismiss
+    @State private var editingRecipe = false
     @Query private var pantry: [PantryItem]
     @AppStorage("assumeStaples") private var assumeStaples = true
     @State private var meal: Meal?
@@ -18,27 +21,39 @@ struct MealDetailView: View {
         self.summary = summary
         let id = summary.id
         _matchingFavorites = Query(filter: #Predicate<FavoriteMeal> { $0.mealID == id })
+        _customMatches = Query(filter: #Predicate<CustomRecipe> { $0.recipeID == id })
     }
+
+    private var isCustom: Bool { CustomRecipe.isCustom(summary.id) }
+
+    /// The user's own recipes come from the database and update live after editing.
+    private var shownMeal: Meal? { customMatches.first?.asMeal ?? meal }
 
     private var isFavorite: Bool { !matchingFavorites.isEmpty }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                AsyncImage(url: summary.thumbnailURL) { image in
-                    image.resizable().scaledToFill()
-                } placeholder: {
-                    Color.secondary.opacity(0.1)
+                let photo = isCustom ? shownMeal?.thumbnailURL : summary.thumbnailURL
+                if photo != nil || !isCustom {
+                    AsyncImage(url: photo) { image in
+                        image.resizable().scaledToFill()
+                    } placeholder: {
+                        Color.secondary.opacity(0.1)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .aspectRatio(1, contentMode: .fit)
+                    .clipped()
                 }
-                .frame(maxWidth: .infinity)
-                .aspectRatio(1, contentMode: .fit)
-                .clipped()
 
-                if let meal {
+                if let meal = shownMeal {
                     details(for: meal)
                         .padding(.horizontal)
+                        .padding(.top, photo == nil ? 8 : 0)
                 } else if let errorMessage {
                     ContentUnavailableView("Couldn't Load Recipe", systemImage: "wifi.exclamationmark", description: Text(errorMessage))
+                } else if isCustom {
+                    ContentUnavailableView("Recipe Deleted", systemImage: "trash")
                 } else {
                     ProgressView().frame(maxWidth: .infinity)
                 }
@@ -54,9 +69,15 @@ struct MealDetailView: View {
             if let meal, let url = meal.sourceURL ?? meal.youtubeURL {
                 ShareLink(item: url)
             }
+            if isCustom, !customMatches.isEmpty {
+                Button("Edit") { editingRecipe = true }
+            }
+        }
+        .sheet(isPresented: $editingRecipe) {
+            RecipeEditorView(recipe: customMatches.first) { dismiss() }
         }
         .task {
-            guard meal == nil else { return }
+            guard meal == nil, !isCustom else { return }
             do {
                 meal = try await MealDBClient.shared.meal(id: summary.id)
                 if meal == nil { errorMessage = "This recipe is no longer available." }
@@ -205,7 +226,8 @@ struct MealDetailView: View {
         if let existing = matchingFavorites.first {
             modelContext.delete(existing)
         } else {
-            modelContext.insert(FavoriteMeal(mealID: summary.id, name: summary.name, thumbnailURL: summary.thumbnailURL))
+            let current = shownMeal?.summary ?? summary
+            modelContext.insert(FavoriteMeal(mealID: current.id, name: current.name, thumbnailURL: current.thumbnailURL))
         }
     }
 }
