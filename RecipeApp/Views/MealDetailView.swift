@@ -75,6 +75,10 @@ struct MealDetailView: View {
                     .font(.title3)
                     .foregroundStyle(.secondary)
             }
+            if meal.cookTime.isReliable {
+                CookTimeRow(time: meal.cookTime)
+                    .padding(.top, 4)
+            }
             if !meal.tags.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack {
@@ -178,5 +182,28 @@ struct MealDetailView: View {
         } else {
             modelContext.insert(FavoriteMeal(mealID: summary.id, name: summary.name, thumbnailURL: summary.thumbnailURL))
         }
+    }
+}
+
+/// "About 45 min · + 8 hr marinating", shown under the recipe title.
+private struct CookTimeRow: View {
+    let time: CookTime
+
+    var body: some View {
+        HStack(spacing: 8) {
+            Label(time.activeText, systemImage: "clock")
+                .font(.subheadline.weight(.semibold))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 6)
+                .background(.tint.opacity(0.15), in: .capsule)
+                .foregroundStyle(.tint)
+            if let waiting = time.waitingText {
+                Label(waiting, systemImage: "hourglass")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Estimated cooking time " + time.activeText + (time.waitingText.map { ", " + $0 } ?? ""))
     }
 }

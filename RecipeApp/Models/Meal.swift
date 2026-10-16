@@ -74,6 +74,9 @@ struct Meal: Decodable, Identifiable, Hashable {
         MealSummary(id: id, name: name, thumbnailURL: thumbnailURL)
     }
 
+    /// Estimated from the instructions; TheMealDB has no time field.
+    var cookTime: CookTime { CookTime(instructions: instructions) }
+
     /// TheMealDB uses flat keys (strIngredient1...20), so decode with dynamic keys.
     private struct Key: CodingKey {
         let stringValue: String
