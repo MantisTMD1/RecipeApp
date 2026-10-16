@@ -77,6 +77,30 @@ struct Meal: Decodable, Identifiable, Hashable {
     /// Estimated from the instructions; TheMealDB has no time field.
     var cookTime: CookTime { CookTime(instructions: instructions) }
 
+    /// Instructions arrive as one blob; split on line breaks and drop "STEP 1" style labels.
+    var steps: [String] {
+        instructions
+            .components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+            .filter { $0.range(of: #"^(step\s*)?\d+\.?$"#, options: [.regularExpression, .caseInsensitive]) == nil }
+    }
+
+    /// For recipes that don't come from TheMealDB, such as the user's own.
+    init(id: String, name: String, category: String?, area: String?, instructions: String,
+         thumbnailURL: URL?, tags: [String] = [], ingredients: [Ingredient]) {
+        self.id = id
+        self.name = name
+        self.category = category
+        self.area = area
+        self.instructions = instructions
+        self.thumbnailURL = thumbnailURL
+        self.tags = tags
+        self.youtubeURL = nil
+        self.sourceURL = nil
+        self.ingredients = ingredients
+    }
+
     /// TheMealDB uses flat keys (strIngredient1...20), so decode with dynamic keys.
     private struct Key: CodingKey {
         let stringValue: String

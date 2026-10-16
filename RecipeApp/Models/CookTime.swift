@@ -98,6 +98,19 @@ struct CookTime: Equatable {
         pattern: #"\b(\d+(?:\.\d+)?|a|an|one|two|three|four|five|six|ten|fifteen|twenty|thirty|forty|half an?)(?:\s*(?:-|–|to|or)\s*(\d+(?:\.\d+)?))?\s*(hours?|hrs?|minutes?|mins?)\b"#,
         options: [.caseInsensitive])
 
+    /// Durations mentioned in a piece of text, for timer buttons: "simmer for 20-25 minutes"
+    /// gives one 25-minute timer labelled "25 min".
+    static func timers(in text: String) -> [(label: String, seconds: Int)] {
+        let range = NSRange(text.startIndex..., in: text)
+        var seen = Set<Int>()
+        return durationPattern.matches(in: text, range: range).compactMap { match in
+            let minutes = minutesMentioned(in: (text as NSString).substring(with: match.range))
+            let seconds = Int((minutes * 60).rounded())
+            guard seconds >= 60, seconds <= 12 * 3600, seen.insert(seconds).inserted else { return nil }
+            return (format(seconds / 60), seconds)
+        }
+    }
+
     private static func sentences(in text: String) -> [String] {
         var result: [String] = []
         text.enumerateSubstrings(in: text.startIndex..., options: .bySentences) { sentence, _, _, _ in
