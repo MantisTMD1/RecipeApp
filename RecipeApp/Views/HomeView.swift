@@ -8,6 +8,7 @@ struct HomeView: View {
     @State private var typeMeals: [Meal] = []
     @State private var typeCache: [MealType: [MealSummary]] = [:]
     @State private var isLoadingType = false
+    @AppStorage(DietFilter.storageKey) private var diet = DietFilter()
     @State private var latest: [Meal] = []
     @State private var categories: [MealCategory] = []
     @State private var errorMessage: String?
@@ -21,6 +22,19 @@ struct HomeView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 28) {
                     MealTypePicker(selection: $mealType)
+
+                    if diet.isActive {
+                        Button {
+                            showingSettings = true
+                        } label: {
+                            Label("Showing \(diet.summary) recipes", systemImage: "leaf.fill")
+                                .font(.footnote.weight(.medium))
+                                .foregroundStyle(.tint)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.horizontal)
+                        .padding(.top, -16)
+                    }
 
                     if mealType != nil {
                         mealTypeContent
@@ -68,6 +82,13 @@ struct HomeView: View {
             }
             .task { if meals.isEmpty { await load() } }
             .task(id: mealType) { await loadMealType() }
+            .onChange(of: diet) {
+                typeCache = [:]
+                Task {
+                    await load()
+                    await loadMealType()
+                }
+            }
             .refreshable { await shuffle() }
         }
     }
@@ -118,7 +139,7 @@ struct HomeView: View {
                                 .padding(.horizontal)
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 12) {
-                                    ForEach(categories) { category in
+                                    ForEach(categories.filter { diet.allowsCategory($0.name) }) { category in
                                         NavigationLink(value: category) {
                                             CategoryChip(category: category)
                                         }
@@ -168,12 +189,12 @@ struct HomeView: View {
     }
 
     private func load() async {
-        async let picks = Self.randomMeals()
+        async let picks = Self.randomMeals(diet: diet)
         async let newest = try? MealDBClient.shared.latestMeals()
         if categories.isEmpty {
             categories = (try? await MealDBClient.shared.categories()) ?? []
         }
-        latest = await newest ?? []
+        latest = (await newest ?? []).filter(diet.allows)
         let result = await picks
         if result.isEmpty {
             errorMessage = "Check your connection and try again."
@@ -190,7 +211,7 @@ struct HomeView: View {
         }
         isShuffling = true
         defer { isShuffling = false }
-        let result = await Self.randomMeals()
+        let result = await Self.randomMeals(diet: diet)
         if !result.isEmpty {
             withAnimation { meals = result }
         }
@@ -204,29 +225,45 @@ struct HomeView: View {
         defer { isLoadingType = false }
 
         if typeCache[type] == nil {
-            typeCache[type] = await MealDBClient.shared.meals(for: type)
+            typeCache[type] = await MealDBClient.shared.meals(for: type, diet: diet)
         }
-        let picks = Array((typeCache[type] ?? []).shuffled().prefix(11))
-        let loaded = await withTaskGroup(of: (Int, Meal?).self) { group in
-            for (index, pick) in picks.enumerated() {
-                group.addTask { (index, try? await MealDBClient.shared.meal(id: pick.id)) }
+        // Load details in batches until there are 11 that fit the diet (or a few batches have been tried).
+        let candidates = (typeCache[type] ?? []).shuffled()
+        var loaded: [Meal] = []
+        var offset = 0
+        while loaded.count < 11, offset < candidates.count, offset < 66 {
+            let batch = Array(candidates[offset..<min(offset + 11, candidates.count)])
+            offset += batch.count
+            let meals = await withTaskGroup(of: (Int, Meal?).self) { group in
+                for (index, pick) in batch.enumerated() {
+                    group.addTask { (index, try? await MealDBClient.shared.meal(id: pick.id)) }
+                }
+                var results: [(Int, Meal)] = []
+                for await (index, meal) in group { if let meal { results.append((index, meal)) } }
+                return results.sorted { $0.0 < $1.0 }.map(\.1)
             }
-            var results: [(Int, Meal)] = []
-            for await (index, meal) in group { if let meal { results.append((index, meal)) } }
-            return results.sorted { $0.0 < $1.0 }.map(\.1)
+            loaded += meals.filter(diet.allows)
+            if Task.isCancelled { return }
         }
+        loaded = Array(loaded.prefix(11))
         guard !Task.isCancelled, mealType == type else { return }
         withAnimation { typeMeals = loaded }
     }
 
     /// One featured recipe plus an even number for the two-column grid. Each random selection
     /// returns ten recipes, so two run in parallel and duplicates are dropped.
-    private static func randomMeals() async -> [Meal] {
-        async let first = try? MealDBClient.shared.randomSelection()
-        async let second = try? MealDBClient.shared.randomSelection()
+    /// With a diet filter on, keeps fetching (up to 5 rounds) until enough recipes fit.
+    private static func randomMeals(diet: DietFilter) async -> [Meal] {
         var seen = Set<String>()
-        let unique = ((await first ?? []) + (await second ?? [])).filter { seen.insert($0.id).inserted }
-        return Array(unique.prefix(11))
+        var picks: [Meal] = []
+        for _ in 0..<(diet.isActive ? 5 : 1) {
+            async let first = try? MealDBClient.shared.randomSelection()
+            async let second = try? MealDBClient.shared.randomSelection()
+            let batch = (await first ?? []) + (await second ?? [])
+            picks += batch.filter { seen.insert($0.id).inserted && diet.allows($0) }
+            if picks.count >= 11 || batch.isEmpty { break }
+        }
+        return Array(picks.prefix(11))
     }
 }
 

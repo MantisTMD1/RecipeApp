@@ -28,6 +28,7 @@ struct SettingsView: View {
     @AppStorage("appearance") private var appearance: Appearance = .dark
     @AppStorage("assumeStaples") private var assumeStaples = true
     @AppStorage(UserName.storageKey) private var userName = ""
+    @AppStorage(DietFilter.storageKey) private var diet = DietFilter()
 
     var body: some View {
         NavigationStack {
@@ -52,6 +53,17 @@ struct SettingsView: View {
                     }
                     .pickerStyle(.segmented)
                     .labelsHidden()
+                }
+
+                Section {
+                    Toggle("Vegetarian", isOn: $diet.vegetarian)
+                    Toggle("Vegan", isOn: $diet.vegan)
+                    Toggle("Gluten-free", isOn: $diet.glutenFree)
+                    Toggle("Dairy-free", isOn: $diet.dairyFree)
+                } header: {
+                    Text("Diet")
+                } footer: {
+                    Text("Hides recipes that don't fit, based on their ingredient lists. Always check labels if you have an allergy.")
                 }
 
                 Section {
