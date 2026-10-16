@@ -22,7 +22,7 @@ struct ContentView: View {
                 ShoppingListView()
             }
             .badge(toBuy.count)
-            Tab("Favorites", systemImage: "heart") {
+            Tab("Saved", systemImage: "heart") {
                 FavoritesView()
             }
             Tab(role: .search) {
@@ -79,5 +79,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self], inMemory: true)
+        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self, CustomRecipe.self], inMemory: true)
 }

@@ -4,6 +4,7 @@ import SwiftData
 /// Recipes ranked by how few ingredients the user is missing.
 struct SuggestionsView: View {
     @Query private var pantry: [PantryItem]
+    @Query private var myRecipes: [CustomRecipe]
     @Environment(\.modelContext) private var modelContext
     @AppStorage("assumeStaples") private var assumeStaples = true
     @AppStorage(DietFilter.storageKey) private var diet = DietFilter()
@@ -39,7 +40,7 @@ struct SuggestionsView: View {
                 Text("Salt, pepper, oil, flour, sugar, butter and water")
             }
         }
-        .task(id: "\(assumeStaples)|\(pantryNames)|\(diet.rawValue)") { await load() }
+        .task(id: "\(assumeStaples)|\(pantryNames)|\(diet.rawValue)|\(myRecipes.map(\.dateModified))") { await load() }
         .refreshable { await load() }
     }
 
@@ -70,7 +71,8 @@ struct SuggestionsView: View {
         isLoading = suggestions.isEmpty
         defer { isLoading = false }
         do {
-            suggestions = try await RecipeMatcher.suggestions(for: pantryNames, assumeStaples: assumeStaples)
+            suggestions = try await RecipeMatcher.suggestions(for: pantryNames, assumeStaples: assumeStaples,
+                                                              ownRecipes: myRecipes.map(\.asMeal))
                 .filter { diet.allows($0.meal) }
             errorMessage = nil
         } catch is CancellationError {
