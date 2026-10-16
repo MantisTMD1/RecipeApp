@@ -10,6 +10,8 @@ struct MealDetailView: View {
     @AppStorage("assumeStaples") private var assumeStaples = true
     @State private var meal: Meal?
     @State private var addedToList = false
+    @State private var scale: RecipeScale = .single
+    @State private var isCooking = false
     @State private var errorMessage: String?
 
     init(summary: MealSummary) {
@@ -94,7 +96,23 @@ struct MealDetailView: View {
             }
         }
 
+        if !meal.steps.isEmpty {
+            Button {
+                isCooking = true
+            } label: {
+                Label("Start Cooking", systemImage: "frying.pan")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 4)
+            }
+            .buttonStyle(.borderedProminent)
+            .fullScreenCover(isPresented: $isCooking) {
+                CookingModeView(meal: meal, scale: scale)
+            }
+        }
+
         let matcher = IngredientMatcher(pantry: pantry.map(\.name), assumeStaples: assumeStaples)
+        let ingredients = meal.ingredients.map { $0.scaled(by: scale.rawValue) }
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .firstTextBaseline) {
                 Text("Ingredients").font(.title2.bold())
@@ -106,7 +124,22 @@ struct MealDetailView: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            ForEach(meal.ingredients) { ingredient in
+            HStack {
+                Text("Amount")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                Picker("Recipe amount", selection: $scale) {
+                    ForEach(RecipeScale.allCases) { option in
+                        Text(option.title)
+                            .accessibilityLabel(option.accessibilityName)
+                            .tag(option)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+            .padding(.bottom, 4)
+            .onChange(of: scale) { addedToList = false }
+            ForEach(ingredients) { ingredient in
                 HStack(alignment: .firstTextBaseline) {
                     if pantry.isEmpty {
                         Image(systemName: "circle.fill")
@@ -122,12 +155,13 @@ struct MealDetailView: View {
                     Text(ingredient.name)
                     Spacer()
                     Text(ingredient.measure)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(scale == .single ? AnyShapeStyle(.secondary) : AnyShapeStyle(.tint))
                         .multilineTextAlignment(.trailing)
+                        .contentTransition(.numericText())
                 }
             }
 
-            let toBuy = meal.ingredients.filter { !matcher.has($0.name) }
+            let toBuy = ingredients.filter { !matcher.has($0.name) }
             if !toBuy.isEmpty {
                 Button {
                     modelContext.addToShoppingList(toBuy, from: meal.name)
@@ -147,7 +181,7 @@ struct MealDetailView: View {
 
         VStack(alignment: .leading, spacing: 10) {
             Text("Instructions").font(.title2.bold())
-            ForEach(Array(steps(from: meal.instructions).enumerated()), id: \.offset) { index, step in
+            ForEach(Array(meal.steps.enumerated()), id: \.offset) { index, step in
                 HStack(alignment: .firstTextBaseline, spacing: 12) {
                     Text("\(index + 1)")
                         .font(.headline)
@@ -165,15 +199,6 @@ struct MealDetailView: View {
             }
             .buttonStyle(.borderedProminent)
         }
-    }
-
-    /// Instructions arrive as one blob; split on line breaks and drop "STEP 1" style labels.
-    private func steps(from instructions: String) -> [String] {
-        instructions
-            .components(separatedBy: .newlines)
-            .map { $0.trimmingCharacters(in: .whitespaces) }
-            .filter { !$0.isEmpty }
-            .filter { $0.range(of: #"^(step\s*)?\d+\.?$"#, options: [.regularExpression, .caseInsensitive]) == nil }
     }
 
     private func toggleFavorite() {
