@@ -65,6 +65,7 @@ struct HomeView: View {
             }
             .navigationDestination(for: MealSummary.self) { meal in
                 MealDetailView(summary: meal)
+                    .recipeZoomDestination(id: meal.id)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -99,6 +100,7 @@ struct HomeView: View {
         if let featured = typeMeals.first {
             NavigationLink(value: featured.summary) {
                 FeaturedCard(meal: featured)
+                    .recipeZoomSource(id: featured.id)
             }
             .buttonStyle(.plain)
             .padding(.horizontal)
@@ -112,6 +114,7 @@ struct HomeView: View {
                     ForEach(typeMeals.dropFirst()) { meal in
                         NavigationLink(value: meal.summary) {
                             RecipeCard(meal: meal)
+                                .recipeZoomSource(id: meal.id)
                         }
                         .buttonStyle(.plain)
                     }
@@ -127,6 +130,7 @@ struct HomeView: View {
                     if let featured = meals.first {
                         NavigationLink(value: featured.summary) {
                             FeaturedCard(meal: featured)
+                                .recipeZoomSource(id: featured.id)
                         }
                         .buttonStyle(.plain)
                         .padding(.horizontal)
@@ -162,6 +166,7 @@ struct HomeView: View {
                                         NavigationLink(value: meal.summary) {
                                             RecipeCard(meal: meal)
                                                 .frame(width: 160)
+                                                .recipeZoomSource(id: meal.id)
                                         }
                                         .buttonStyle(.plain)
                                     }
@@ -179,6 +184,7 @@ struct HomeView: View {
                                 ForEach(meals.dropFirst()) { meal in
                                     NavigationLink(value: meal.summary) {
                                         RecipeCard(meal: meal)
+                                            .recipeZoomSource(id: meal.id)
                                     }
                                     .buttonStyle(.plain)
                                 }

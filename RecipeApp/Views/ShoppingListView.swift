@@ -2,6 +2,7 @@ import SwiftUI
 import SwiftData
 
 struct ShoppingListView: View {
+    @Environment(\.selectTab) private var selectTab
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \ShoppingItem.dateAdded) private var items: [ShoppingItem]
     @Query private var pantry: [PantryItem]
@@ -27,6 +28,28 @@ struct ShoppingListView: View {
                     }
                 }
 
+                if items.isEmpty {
+                    Section {
+                        EmptyStateView(systemImage: "cart.fill",
+                                       accents: ["basket.fill", "carrot.fill", "leaf.fill"],
+                                       title: "Your List Is Empty",
+                                       message: "Add missing ingredients from any recipe with one tap, or type an item above.") {
+                            Button {
+                                selectTab(.kitchen)
+                            } label: {
+                                Label("Find Recipe Ideas", systemImage: "sparkles")
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .controlSize(.large)
+                        }
+                        .scrollDisabled(true)
+                        .frame(height: 440)
+                    }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                }
+
                 if !toBuy.isEmpty {
                     Section("To Buy (\(toBuy.count))") {
                         ForEach(toBuy) { ShoppingRow(item: $0) }
@@ -46,16 +69,6 @@ struct ShoppingListView: View {
                 }
             }
             .animation(.default, value: items.map(\.isChecked))
-            .overlay {
-                if items.isEmpty && !isAdding {
-                    ContentUnavailableView(
-                        "Your List Is Empty",
-                        systemImage: "cart",
-                        description: Text("Add missing ingredients from any recipe, or type items above.")
-                    )
-                    .allowsHitTesting(false)
-                }
-            }
             .navigationTitle("Shopping List")
             .toolbar {
                 if !checked.isEmpty {

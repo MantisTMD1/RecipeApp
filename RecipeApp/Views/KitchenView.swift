@@ -11,6 +11,26 @@ struct KitchenView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \PantryItem.name) private var pantry: [PantryItem]
     @State private var showingPicker = false
+    @AppStorage("hideQuickAdd") private var hideQuickAdd = false
+
+    /// Everyday items offered as one-tap adds (names match TheMealDB's ingredient list).
+    static let commonItems = ["Eggs", "Milk", "Butter", "Onion", "Garlic", "Rice", "Chicken",
+                              "Tomatoes", "Potatoes", "Cheese", "Spaghetti", "Carrots", "Lemon", "Bread"]
+
+    private func isInPantry(_ name: String) -> Bool {
+        pantry.contains { $0.name.caseInsensitiveCompare(name) == .orderedSame }
+    }
+
+    private func toggleCommon(_ name: String) {
+        if let existing = pantry.first(where: { $0.name.caseInsensitiveCompare(name) == .orderedSame }) {
+            modelContext.delete(existing)
+        } else {
+            modelContext.insert(PantryItem(name: name))
+        }
+    }
+
+    /// Keep offering quick adds while the kitchen is still small.
+    private var showsQuickAdd: Bool { !hideQuickAdd && pantry.count < 10 }
 
     var body: some View {
         NavigationStack {
@@ -21,6 +41,21 @@ struct KitchenView: View {
                             Label("What Can I Make?", systemImage: "sparkles")
                                 .font(.headline)
                                 .foregroundStyle(.tint)
+                        }
+                    }
+                }
+
+                if showsQuickAdd && !pantry.isEmpty {
+                    Section {
+                        QuickAddChips(items: Self.commonItems, isAdded: isInPantry, toggle: toggleCommon)
+                            .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
+                    } header: {
+                        HStack {
+                            Text("Quick Add")
+                            Spacer()
+                            Button("Hide") { withAnimation { hideQuickAdd = true } }
+                                .font(.footnote)
+                                .textCase(nil)
                         }
                     }
                 }
@@ -44,14 +79,21 @@ struct KitchenView: View {
             }
             .overlay {
                 if pantry.isEmpty {
-                    ContentUnavailableView {
-                        Label("Your Kitchen Is Empty", systemImage: "refrigerator")
-                    } description: {
-                        Text("Add the ingredients you have, and we'll suggest recipes you can make.")
-                    } actions: {
-                        Button("Add Ingredients") { showingPicker = true }
-                            .buttonStyle(.borderedProminent)
+                    EmptyStateView(systemImage: "refrigerator.fill",
+                                   accents: ["carrot.fill", "fish.fill", "leaf.fill"],
+                                   title: "What's in Your Kitchen?",
+                                   message: "Tap what you have and we'll find recipes you can make right now.") {
+                        QuickAddChips(items: Self.commonItems, isAdded: isInPantry, toggle: toggleCommon)
+                        Button {
+                            showingPicker = true
+                        } label: {
+                            Label("Search All Ingredients", systemImage: "magnifyingglass")
+                                .frame(maxWidth: .infinity)
+                        }
+                        .buttonStyle(.bordered)
+                        .controlSize(.large)
                     }
+                    .background(Color(.systemBackground))
                 }
             }
             .navigationTitle("My Kitchen")
@@ -60,6 +102,7 @@ struct KitchenView: View {
             }
             .navigationDestination(for: MealSummary.self) { meal in
                 MealDetailView(summary: meal)
+                    .recipeZoomDestination(id: meal.id)
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
