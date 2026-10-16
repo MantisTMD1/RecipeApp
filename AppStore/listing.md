@@ -25,27 +25,44 @@ Not sure what's for dinner? Tell Recipe Rescue what's in your kitchen and get re
 Recipe Rescue turns the ingredients you already have into dinner ideas.
 
 COOK WITH WHAT YOU HAVE
-Add the ingredients in your kitchen and tap "What Can I Make?". Recipes are ranked by how few ingredients you're missing, so you can see at a glance what's ready to cook and what needs one quick shop.
+Tap what's in your kitchen and hit "What Can I Make?". Recipes are ranked by how few ingredients you're missing, so you can see at a glance what's ready to cook and what needs one quick shop.
+
+STEP-BY-STEP COOKING MODE
+Big, easy-to-read steps one at a time, with the screen kept awake. Any time a step mentions ("simmer for 20 minutes") becomes a one-tap timer that alerts you even when your phone is locked.
+
+YOUR OWN RECIPES
+Save family favorites with a photo, ingredients and steps. They work everywhere: cooking mode, the shopping list and recipe ideas.
+
+MAKE MORE OR LESS
+Halve, double or triple any recipe and every amount updates, including your shopping list.
+
+EAT THE WAY YOU EAT
+Vegetarian, vegan, gluten-free and dairy-free filters apply across the whole app.
 
 SHOP SMARTER
-Add a recipe's missing ingredients to your shopping list in one tap. Check items off as you shop, then move them straight into your kitchen when you get home. Share your list with anyone by text.
+Add a recipe's missing ingredients to your shopping list in one tap. Check items off as you shop, then move them into your kitchen when you get home.
 
 DISCOVER SOMETHING NEW
-Get a fresh feed of recipes from around the world every time you open the app. Shuffle for new ideas, or browse by category: beef, chicken, seafood, vegetarian, desserts and more.
-
-EVERYTHING YOU NEED TO COOK
-Every recipe includes a photo, ingredients with measurements and step-by-step instructions, with a video link when there is one. Ingredients you already have are checked off automatically.
+Browse breakfast, lunch, dinner and dessert ideas, see estimated cooking times, and get a fresh feed of recipes from around the world every time you open the app.
 
 PRIVATE BY DESIGN
-No account, no ads, no tracking. Your kitchen, favorites and shopping list stay on your phone.
-
-Also includes favorites, recipe search, and dark and light themes.
+No account, no ads, no tracking. Your kitchen, recipes and lists stay on your phone.
 
 Recipe data from TheMealDB.
 
 ## Keywords (100 max, comma-separated, no spaces needed)
 
-recipes,cooking,pantry,ingredients,meal ideas,dinner,shopping list,leftovers,kitchen,food,cookbook
+recipes,cooking,pantry,meal ideas,dinner,shopping list,leftovers,cookbook,vegan,timer,kitchen
+
+## What's New (version 1.2)
+
+- Cooking mode: one big step at a time, with tap-to-start timers
+- Add your own recipes with photos
+- Halve, double or triple any recipe
+- Vegetarian, vegan, gluten-free and dairy-free filters
+- Browse by breakfast, lunch, dinner or dessert
+- Estimated cooking times on every recipe
+- Quick-add common ingredients and an A–Z ingredient index
 
 ## What's New (version 1.1)
 
