@@ -101,11 +101,27 @@ struct CookTime: Equatable {
     /// Durations mentioned in a piece of text, for timer buttons: "simmer for 20-25 minutes"
     /// gives one 25-minute timer labelled "25 min".
     static func timers(in text: String) -> [(label: String, seconds: Int)] {
-        let range = NSRange(text.startIndex..., in: text)
+        let ns = text as NSString
+        let matches = durationPattern.matches(in: text, range: NSRange(location: 0, length: ns.length))
+        // Join "1 hour 30 minutes" / "1 hour and 30 minutes" into a single duration.
+        var spans: [NSRange] = []
+        for match in matches {
+            if let last = spans.last {
+                let gap = ns.substring(with: NSRange(location: NSMaxRange(last), length: match.range.location - NSMaxRange(last)))
+                let lastIsHours = ns.substring(with: last).lowercased().range(of: #"(hours?|hrs?)$"#, options: .regularExpression) != nil
+                let nextIsMinutes = ns.substring(with: match.range).lowercased().range(of: #"(minutes?|mins?)$"#, options: .regularExpression) != nil
+                if lastIsHours && nextIsMinutes,
+                   gap.trimmingCharacters(in: .whitespaces).lowercased().replacingOccurrences(of: ",", with: "").trimmingCharacters(in: .whitespaces).isEmpty
+                    || gap.trimmingCharacters(in: .whitespaces).lowercased() == "and" {
+                    spans[spans.count - 1] = NSUnionRange(last, match.range)
+                    continue
+                }
+            }
+            spans.append(match.range)
+        }
         var seen = Set<Int>()
-        return durationPattern.matches(in: text, range: range).compactMap { match in
-            let minutes = minutesMentioned(in: (text as NSString).substring(with: match.range))
-            let seconds = Int((minutes * 60).rounded())
+        return spans.compactMap { span in
+            let seconds = Int((minutesMentioned(in: ns.substring(with: span)) * 60).rounded())
             guard seconds >= 60, seconds <= 12 * 3600, seen.insert(seconds).inserted else { return nil }
             return (format(seconds / 60), seconds)
         }
