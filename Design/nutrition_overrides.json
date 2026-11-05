@@ -1,0 +1,1101 @@
+{
+ "all purpose flour": {
+  "sameAs": "flour"
+ },
+ "allspice": {
+  "query": "spices allspice ground"
+ },
+ "almond": {
+  "query": "nuts almonds"
+ },
+ "almond extract": {
+  "sameAs": "vanilla extract"
+ },
+ "apple": {
+  "contains": "Apples, raw, with skin"
+ },
+ "apple cider vinegar": {
+  "query": "vinegar cider"
+ },
+ "aubergine": {
+  "query": "eggplant raw"
+ },
+ "avocado": {
+  "query": "avocados raw all commercial varieties"
+ },
+ "bacon": {
+  "query": "pork cured bacon unprepared"
+ },
+ "baguette": {
+  "contains": "Bread, french or vienna (includes",
+  "slice": 30
+ },
+ "baking powder": {
+  "query": "leavening agents baking powder double-acting sodium aluminum sulfate"
+ },
+ "baking soda": {
+  "query": "leavening agents baking soda"
+ },
+ "balsamic vinegar": {
+  "query": "vinegar balsamic"
+ },
+ "basil leave": {
+  "sameAs": "basil"
+ },
+ "basmati rice": {
+  "sameAs": "rice"
+ },
+ "bay leaf": {
+  "each": 0.5,
+  "query": "spices bay leaf"
+ },
+ "bay leave": {
+  "sameAs": "bay leaf"
+ },
+ "bean sprout": {
+  "query": "mung beans mature seeds sprouted raw"
+ },
+ "beef": {
+  "contains": "Beef, ground, 85% lean meat / 15% fat, raw"
+ },
+ "beef brisket": {
+  "query": "beef brisket whole separable lean and fat trimmed fat all grades raw"
+ },
+ "beef fillet": {
+  "query": "beef loin tenderloin steak separable lean and fat trimmed fat all grades raw"
+ },
+ "beef stock": {
+  "query": "soup stock beef home-prepared"
+ },
+ "beef stock cube": {
+  "sameAs": "chicken stock cube"
+ },
+ "beer": {
+  "query": "alcoholic beverage beer regular all"
+ },
+ "beetroot": {
+  "query": "beets raw"
+ },
+ "bicarbonate of soda": {
+  "sameAs": "baking soda"
+ },
+ "bird eye chilli": {
+  "sameAs": "red chilli"
+ },
+ "birds-eye chillie": {
+  "sameAs": "red chilli"
+ },
+ "black bean": {
+  "query": "beans black mature seeds raw"
+ },
+ "black olive": {
+  "query": "olives ripe canned small-extra large"
+ },
+ "black pepper": {
+  "query": "spices pepper black"
+ },
+ "black treacle": {
+  "sameAs": "molasse"
+ },
+ "boiling water": {
+  "sameAs": "water"
+ },
+ "braeburn apple": {
+  "sameAs": "apple"
+ },
+ "bramley apple": {
+  "sameAs": "apple"
+ },
+ "brandy": {
+  "query": "alcoholic beverage distilled all"
+ },
+ "bread": {
+  "contains": "Bread, white, commercially prepared (includes",
+  "slice": 30
+ },
+ "bread flour": {
+  "query": "wheat flour white bread enriched"
+ },
+ "breadcrumb": {
+  "query": "bread crumbs dry grated plain"
+ },
+ "broad bean": {
+  "query": "broadbeans fava beans mature seeds raw"
+ },
+ "brown lentil": {
+  "sameAs": "lentil"
+ },
+ "brown sugar": {
+  "query": "sugars brown"
+ },
+ "bun": {
+  "query": "rolls hamburger or hotdog plain"
+ },
+ "butter": {
+  "query": "butter salted"
+ },
+ "butter bean": {
+  "query": "lima beans large mature seeds canned"
+ },
+ "butternut squash": {
+  "sameAs": "squash"
+ },
+ "cannellini bean": {
+  "query": "beans white mature seeds canned"
+ },
+ "canola oil": {
+  "sameAs": "vegetable oil"
+ },
+ "caper": {
+  "query": "capers canned"
+ },
+ "caraway seed": {
+  "query": "spices caraway seed"
+ },
+ "cardamom": {
+  "query": "spices cardamom"
+ },
+ "cashew nut": {
+  "query": "nuts cashew nuts raw"
+ },
+ "caster sugar": {
+  "sameAs": "sugar"
+ },
+ "cayenne pepper": {
+  "query": "spices pepper red or cayenne"
+ },
+ "challot": {
+  "sameAs": "shallot"
+ },
+ "cheddar": {
+  "sameAs": "cheddar cheese"
+ },
+ "cheddar cheese": {
+  "contains": "Cheese, cheddar"
+ },
+ "cheese": {
+  "sameAs": "cheddar cheese"
+ },
+ "cherry tomato": {
+  "each": 17,
+  "sameAs": "tomato"
+ },
+ "chicken": {
+  "each": 1200,
+  "query": "chicken broilers or fryers meat and skin raw"
+ },
+ "chicken breast": {
+  "each": 170,
+  "query": "chicken broilers or fryers breast meat only raw"
+ },
+ "chicken leg": {
+  "each": 230,
+  "query": "chicken broilers or fryers leg meat and skin raw"
+ },
+ "chicken stock": {
+  "query": "soup stock chicken home-prepared"
+ },
+ "chicken stock cube": {
+  "query": "soup bouillon cubes and granules"
+ },
+ "chicken thigh": {
+  "each": 115,
+  "query": "chicken broilers or fryers thigh meat only raw"
+ },
+ "chicken wing": {
+  "each": 90,
+  "query": "chicken broilers or fryers wing meat and skin raw"
+ },
+ "chickpea": {
+  "query": "chickpeas garbanzo beans bengal gram mature seeds canned solids and liquids"
+ },
+ "chili powder": {
+  "sameAs": "chilli powder"
+ },
+ "chilli": {
+  "sameAs": "red chilli"
+ },
+ "chilli flake": {
+  "sameAs": "cayenne pepper"
+ },
+ "chilli powder": {
+  "query": "spices chili powder"
+ },
+ "chocolate chip": {
+  "query": "candies semisweet chocolate"
+ },
+ "chopped onion": {
+  "sameAs": "onion"
+ },
+ "chopped tomato": {
+  "sameAs": "tinned tomato"
+ },
+ "chorizo": {
+  "each": 75,
+  "query": "sausage pork chorizo link or ground raw"
+ },
+ "chuck roast": {
+  "query": "beef chuck arm pot roast separable lean and fat trimmed fat all grades raw"
+ },
+ "cilantro": {
+  "query": "coriander cilantro leaves raw"
+ },
+ "cinnamon": {
+  "sameAs": "ground cinnamon"
+ },
+ "cinnamon stick": {
+  "each": 3,
+  "sameAs": "ground cinnamon"
+ },
+ "clam": {
+  "query": "mollusks clam mixed species raw"
+ },
+ "clear honey": {
+  "sameAs": "honey"
+ },
+ "clove": {
+  "query": "spices cloves ground"
+ },
+ "cocoa": {
+  "sameAs": "cocoa powder"
+ },
+ "cocoa powder": {
+  "query": "cocoa dry powder unsweetened"
+ },
+ "coconut": {
+  "query": "nuts coconut meat raw"
+ },
+ "coconut cream": {
+  "query": "nuts coconut cream raw"
+ },
+ "coconut milk": {
+  "query": "nuts coconut milk canned"
+ },
+ "cold water": {
+  "sameAs": "water"
+ },
+ "condensed milk": {
+  "query": "milk canned condensed sweetened"
+ },
+ "coriander": {
+  "sameAs": "cilantro"
+ },
+ "coriander seed": {
+  "sameAs": "ground coriander"
+ },
+ "corn flour": {
+  "sameAs": "cornstarch"
+ },
+ "corn on the cob": {
+  "each": 100,
+  "sameAs": "sweetcorn"
+ },
+ "corned beef": {
+  "query": "beef cured corned beef brisket raw"
+ },
+ "cornflour": {
+  "sameAs": "cornstarch"
+ },
+ "cornmeal": {
+  "query": "cornmeal whole-grain yellow"
+ },
+ "cornstarch": {
+  "query": "cornstarch"
+ },
+ "courgette": {
+  "query": "squash summer zucchini includes skin raw"
+ },
+ "couscou": {
+  "query": "couscous dry"
+ },
+ "cream": {
+  "sameAs": "heavy cream"
+ },
+ "cream cheese": {
+  "query": "cheese cream"
+ },
+ "creme fraiche": {
+  "sameAs": "sour cream"
+ },
+ "cucumber": {
+  "query": "cucumber with peel raw"
+ },
+ "cumin": {
+  "query": "spices cumin seed"
+ },
+ "cumin seed": {
+  "sameAs": "cumin"
+ },
+ "currant": {
+  "query": "currants zante dried"
+ },
+ "curry powder": {
+  "query": "spices curry powder"
+ },
+ "custard": {
+  "query": "puddings vanilla ready-to-eat"
+ },
+ "dark brown soft sugar": {
+  "sameAs": "brown sugar"
+ },
+ "dark brown sugar": {
+  "sameAs": "brown sugar"
+ },
+ "dark chocolate": {
+  "query": "chocolate dark cacao solids"
+ },
+ "demerara sugar": {
+  "sameAs": "brown sugar"
+ },
+ "desiccated coconut": {
+  "query": "nuts coconut meat dried desiccated not sweetened"
+ },
+ "digestive biscuit": {
+  "query": "cookies graham crackers plain or honey"
+ },
+ "dijon mustard": {
+  "sameAs": "mustard"
+ },
+ "dill pickle": {
+  "query": "pickles cucumber dill or kosher dill"
+ },
+ "double cream": {
+  "sameAs": "heavy cream"
+ },
+ "dried apricot": {
+  "query": "apricots dried sulfured uncooked"
+ },
+ "dried oregano": {
+  "sameAs": "oregano"
+ },
+ "dried white bean": {
+  "query": "beans white mature seeds raw"
+ },
+ "dry sherry": {
+  "sameAs": "white wine"
+ },
+ "dry white wine": {
+  "sameAs": "white wine"
+ },
+ "egg": {
+  "each": 50,
+  "query": "egg whole raw fresh"
+ },
+ "egg plant": {
+  "sameAs": "aubergine"
+ },
+ "egg white": {
+  "query": "egg white raw fresh"
+ },
+ "egg yolk": {
+  "query": "egg yolk raw fresh"
+ },
+ "eggplant": {
+  "sameAs": "aubergine"
+ },
+ "extra virgin olive oil": {
+  "sameAs": "olive oil"
+ },
+ "fennel bulb": {
+  "sameAs": "fennel"
+ },
+ "fennel seed": {
+  "query": "spices fennel seed"
+ },
+ "feta": {
+  "query": "cheese feta"
+ },
+ "filo pastry": {
+  "query": "phyllo dough"
+ },
+ "fish fillet": {
+  "sameAs": "white fish"
+ },
+ "fish sauce": {
+  "query": "sauce fish ready-to-serve"
+ },
+ "fish stock": {
+  "query": "soup stock fish home-prepared"
+ },
+ "flaked almond": {
+  "sameAs": "almond"
+ },
+ "flank steak": {
+  "query": "beef flank steak separable lean and fat trimmed fat choice raw"
+ },
+ "flour": {
+  "query": "wheat flour white all-purpose enriched unbleached"
+ },
+ "garam masala": {
+  "sameAs": "curry powder"
+ },
+ "garlic clove": {
+  "sameAs": "garlic"
+ },
+ "garlic powder": {
+  "query": "spices garlic powder"
+ },
+ "ghee": {
+  "query": "butter oil anhydrous"
+ },
+ "goat cheese": {
+  "query": "cheese goat soft type"
+ },
+ "golden caster sugar": {
+  "sameAs": "sugar"
+ },
+ "golden syrup": {
+  "query": "syrups corn light"
+ },
+ "granulated sugar": {
+  "sameAs": "sugar"
+ },
+ "greek yogurt": {
+  "query": "yogurt greek plain whole milk"
+ },
+ "green bean": {
+  "query": "beans snap green raw"
+ },
+ "green chilli": {
+  "query": "peppers hot chili green raw"
+ },
+ "green olive": {
+  "query": "olives pickled canned or bottled green"
+ },
+ "green pepper": {
+  "query": "peppers sweet green raw"
+ },
+ "ground allspice": {
+  "sameAs": "allspice"
+ },
+ "ground almond": {
+  "sameAs": "almond"
+ },
+ "ground beef": {
+  "sameAs": "beef"
+ },
+ "ground black pepper": {
+  "sameAs": "black pepper"
+ },
+ "ground cardomom": {
+  "sameAs": "cardamom"
+ },
+ "ground cinnamon": {
+  "query": "spices cinnamon ground"
+ },
+ "ground clove": {
+  "sameAs": "clove"
+ },
+ "ground coriander": {
+  "query": "spices coriander seed"
+ },
+ "ground cumin": {
+  "sameAs": "cumin"
+ },
+ "ground ginger": {
+  "query": "spices ginger ground"
+ },
+ "ground ginger root": {
+  "sameAs": "ginger"
+ },
+ "ground nut oil": {
+  "sameAs": "peanut oil"
+ },
+ "ground nutmeg": {
+  "sameAs": "nutmeg"
+ },
+ "ground pork": {
+  "query": "pork ground lean fat raw"
+ },
+ "ground turmeric": {
+  "sameAs": "turmeric"
+ },
+ "gruyère": {
+  "query": "cheese gruyere"
+ },
+ "ham": {
+  "query": "pork cured ham whole separable lean only unheated"
+ },
+ "harissa spice": {
+  "skip": true
+ },
+ "heavy cream": {
+  "query": "cream fluid heavy whipping"
+ },
+ "hotsauce": {
+  "query": "sauce ready-to-serve pepper tabasco"
+ },
+ "ice cube": {
+  "sameAs": "water"
+ },
+ "icing sugar": {
+  "sameAs": "powdered sugar"
+ },
+ "instant yeast": {
+  "sameAs": "yeast"
+ },
+ "jalapeno": {
+  "query": "peppers jalapeno raw"
+ },
+ "jam": {
+  "query": "jams and preserves"
+ },
+ "jasmine rice": {
+  "sameAs": "rice"
+ },
+ "ketchup": {
+  "sameAs": "tomato ketchup"
+ },
+ "kidney bean": {
+  "query": "beans kidney red mature seeds canned solids and liquids"
+ },
+ "king prawn": {
+  "sameAs": "prawn"
+ },
+ "kosher salt": {
+  "sameAs": "salt"
+ },
+ "lamb": {
+  "query": "lamb ground raw"
+ },
+ "lamb chop": {
+  "each": 100,
+  "query": "lamb loin separable lean and fat trimmed fat choice raw"
+ },
+ "lamb leg": {
+  "query": "lamb leg whole shank and sirloin separable lean and fat trimmed fat choice raw"
+ },
+ "lamb loin chop": {
+  "sameAs": "lamb chop"
+ },
+ "lamb mince": {
+  "sameAs": "lamb"
+ },
+ "lamb shoulder": {
+  "query": "lamb shoulder whole arm and blade separable lean and fat trimmed fat choice raw"
+ },
+ "lamb stock": {
+  "sameAs": "beef stock"
+ },
+ "lasagne sheet": {
+  "sameAs": "macaroni"
+ },
+ "lemon": {
+  "query": "lemons raw without peel"
+ },
+ "lemon zest": {
+  "query": "lemon peel raw"
+ },
+ "lemongrass": {
+  "query": "lemon grass citronella raw"
+ },
+ "lemongrass stalk": {
+  "sameAs": "lemongrass"
+ },
+ "lettuce": {
+  "query": "lettuce iceberg raw"
+ },
+ "light brown sugar": {
+  "sameAs": "brown sugar"
+ },
+ "lime": {
+  "query": "limes raw"
+ },
+ "long grain rice": {
+  "sameAs": "rice"
+ },
+ "macaroni": {
+  "query": "pasta dry enriched"
+ },
+ "maple syrup": {
+  "query": "syrups maple"
+ },
+ "marjoram": {
+  "query": "spices marjoram dried"
+ },
+ "mascarpone": {
+  "sameAs": "cream cheese"
+ },
+ "mayonnaise": {
+  "query": "salad dressing mayonnaise regular"
+ },
+ "melted butter": {
+  "sameAs": "butter"
+ },
+ "milk": {
+  "query": "milk whole milkfat vitamin d"
+ },
+ "milk chocolate": {
+  "query": "candies milk chocolate"
+ },
+ "minced beef": {
+  "sameAs": "ground beef"
+ },
+ "minced garlic": {
+  "sameAs": "garlic"
+ },
+ "minced pork": {
+  "sameAs": "ground pork"
+ },
+ "mint": {
+  "query": "spearmint fresh"
+ },
+ "mirin": {
+  "sameAs": "white wine"
+ },
+ "molasse": {
+  "query": "molasses"
+ },
+ "mozzarella": {
+  "query": "cheese mozzarella whole milk"
+ },
+ "muscovado sugar": {
+  "sameAs": "brown sugar"
+ },
+ "mushroom": {
+  "query": "mushrooms white raw"
+ },
+ "mussel": {
+  "query": "mollusks mussel blue raw"
+ },
+ "mustard": {
+  "query": "mustard prepared yellow"
+ },
+ "mustard seed": {
+  "query": "spices mustard seed ground"
+ },
+ "natural yoghurt": {
+  "sameAs": "yogurt"
+ },
+ "natural yogurt": {
+  "sameAs": "yogurt"
+ },
+ "new potato": {
+  "sameAs": "potato"
+ },
+ "noodle": {
+  "query": "noodles egg dry enriched"
+ },
+ "nutmeg": {
+  "query": "spices nutmeg ground"
+ },
+ "oat": {
+  "query": "cereals oats regular and quick not fortified dry"
+ },
+ "oil": {
+  "sameAs": "vegetable oil"
+ },
+ "olive oil": {
+  "query": "oil olive salad or cooking"
+ },
+ "orange": {
+  "query": "oranges raw all commercial varieties"
+ },
+ "orange blossom water": {
+  "skip": true
+ },
+ "orange zest": {
+  "sameAs": "lemon zest"
+ },
+ "oregano": {
+  "query": "spices oregano dried"
+ },
+ "oyster sauce": {
+  "query": "sauce oyster ready-to-serve"
+ },
+ "paella rice": {
+  "sameAs": "rice"
+ },
+ "pak choi": {
+  "query": "cabbage chinese pak-choi raw"
+ },
+ "palm sugar": {
+  "sameAs": "brown sugar"
+ },
+ "paprika": {
+  "query": "spices paprika"
+ },
+ "parmesan": {
+  "query": "cheese parmesan grated"
+ },
+ "parmesan cheese": {
+  "sameAs": "parmesan"
+ },
+ "passata": {
+  "sameAs": "tomato puree"
+ },
+ "pasta": {
+  "sameAs": "macaroni"
+ },
+ "pea": {
+  "query": "peas green raw"
+ },
+ "peanut": {
+  "query": "peanuts all types raw"
+ },
+ "peanut butter": {
+  "query": "peanut butter smooth style with salt"
+ },
+ "peanut oil": {
+  "query": "oil peanut salad or cooking"
+ },
+ "pecan nut": {
+  "query": "nuts pecans"
+ },
+ "penne": {
+  "sameAs": "macaroni"
+ },
+ "pepper": {
+  "sameAs": "black pepper"
+ },
+ "pine nut": {
+  "query": "nuts pine nuts dried"
+ },
+ "pineapple chunk": {
+  "query": "pineapple raw all varieties"
+ },
+ "pistachio": {
+  "query": "nuts pistachio nuts raw"
+ },
+ "pita bread": {
+  "query": "bread pita white enriched"
+ },
+ "plain flour": {
+  "sameAs": "flour"
+ },
+ "plum tomato": {
+  "sameAs": "tomato"
+ },
+ "pork": {
+  "query": "pork fresh composite of trimmed retail cuts loin lean and fat raw"
+ },
+ "pork chop": {
+  "each": 150,
+  "query": "pork fresh loin center loin chops bone-in separable lean and fat raw"
+ },
+ "pork shoulder": {
+  "query": "pork fresh shoulder whole separable lean and fat raw"
+ },
+ "potato": {
+  "query": "potatoes flesh and skin raw"
+ },
+ "powdered sugar": {
+  "query": "sugars powdered"
+ },
+ "prawn": {
+  "query": "crustaceans shrimp mixed species raw"
+ },
+ "prune": {
+  "query": "plums dried prunes uncooked"
+ },
+ "puff pastry": {
+  "query": "puff pastry frozen ready-to-bake"
+ },
+ "radish": {
+  "query": "radishes raw"
+ },
+ "raisin": {
+  "query": "raisins seedless"
+ },
+ "rapeseed oil": {
+  "sameAs": "vegetable oil"
+ },
+ "raspberry jam": {
+  "sameAs": "jam"
+ },
+ "raw king prawn": {
+  "sameAs": "prawn"
+ },
+ "raw tiger prawn": {
+  "sameAs": "prawn"
+ },
+ "red cabbage": {
+  "query": "cabbage red raw"
+ },
+ "red chilli": {
+  "query": "peppers hot chili red raw"
+ },
+ "red chilli flake": {
+  "sameAs": "cayenne pepper"
+ },
+ "red lentil": {
+  "sameAs": "lentil"
+ },
+ "red onion": {
+  "sameAs": "onion"
+ },
+ "red pepper": {
+  "query": "peppers sweet red raw"
+ },
+ "red pepper flake": {
+  "sameAs": "cayenne pepper"
+ },
+ "red wine": {
+  "query": "alcoholic beverage wine table red"
+ },
+ "red wine vinegar": {
+  "query": "vinegar red wine"
+ },
+ "rice": {
+  "query": "rice white long-grain regular raw enriched"
+ },
+ "rice flour": {
+  "query": "rice flour white unenriched"
+ },
+ "rice noodle": {
+  "query": "rice noodles dry"
+ },
+ "rice vinegar": {
+  "sameAs": "vinegar"
+ },
+ "ricotta": {
+  "query": "cheese ricotta whole milk"
+ },
+ "roasted peanut": {
+  "sameAs": "peanut"
+ },
+ "rocket": {
+  "query": "arugula raw"
+ },
+ "russet potato": {
+  "sameAs": "potato"
+ },
+ "saffron": {
+  "query": "spices saffron"
+ },
+ "sage": {
+  "query": "spices sage ground"
+ },
+ "salmon": {
+  "each": 170,
+  "query": "fish salmon atlantic farmed raw"
+ },
+ "salt cod": {
+  "query": "fish cod atlantic dried and salted"
+ },
+ "salted butter": {
+  "sameAs": "butter"
+ },
+ "sardine": {
+  "query": "fish sardine atlantic canned in oil drained solids with bone"
+ },
+ "sauerkraut": {
+  "query": "sauerkraut canned solids and liquids"
+ },
+ "sausage": {
+  "each": 75,
+  "query": "pork sausage link patty unprepared"
+ },
+ "scallion": {
+  "sameAs": "spring onion"
+ },
+ "scotch bonnet": {
+  "sameAs": "red chilli"
+ },
+ "sea salt": {
+  "sameAs": "salt"
+ },
+ "self-raising flour": {
+  "query": "wheat flour white all-purpose self-rising enriched"
+ },
+ "sesame oil": {
+  "sameAs": "sesame seed oil"
+ },
+ "sesame seed": {
+  "query": "seeds sesame seeds whole dried"
+ },
+ "sesame seed oil": {
+  "query": "oil sesame"
+ },
+ "shallot": {
+  "each": 30,
+  "query": "shallots raw"
+ },
+ "sherry vinegar": {
+  "sameAs": "vinegar"
+ },
+ "shiitake mushroom": {
+  "query": "mushrooms shiitake raw"
+ },
+ "shortcrust pastry": {
+  "query": "pie crust standard-type frozen ready-to-bake enriched"
+ },
+ "shortening": {
+  "query": "shortening household"
+ },
+ "shrimp": {
+  "sameAs": "prawn"
+ },
+ "single cream": {
+  "query": "cream fluid half and half"
+ },
+ "sirloin steak": {
+  "query": "beef top sirloin steak separable lean and fat trimmed fat all grades raw"
+ },
+ "smoked haddock": {
+  "query": "fish haddock smoked"
+ },
+ "smoked paprika": {
+  "sameAs": "paprika"
+ },
+ "sour cream": {
+  "query": "cream sour cultured"
+ },
+ "soy sauce": {
+  "contains": "Soy sauce made from soy and wheat (shoyu)"
+ },
+ "soya bean": {
+  "query": "soybeans mature seeds raw"
+ },
+ "spaghetti": {
+  "sameAs": "macaroni"
+ },
+ "spring onion": {
+  "query": "onions spring or scallions includes tops and bulb raw"
+ },
+ "squash": {
+  "query": "squash winter butternut raw"
+ },
+ "squid": {
+  "query": "mollusks squid mixed species raw"
+ },
+ "star anise": {
+  "query": "spices anise seed"
+ },
+ "strong white bread flour": {
+  "sameAs": "bread flour"
+ },
+ "suet": {
+  "query": "beef variety meats and by-products suet raw"
+ },
+ "sugar": {
+  "query": "sugars granulated"
+ },
+ "sunflower oil": {
+  "sameAs": "vegetable oil"
+ },
+ "swede": {
+  "query": "rutabagas raw"
+ },
+ "sweet potato": {
+  "query": "sweet potato raw unprepared"
+ },
+ "sweetcorn": {
+  "query": "corn sweet yellow raw"
+ },
+ "tahini": {
+  "query": "seeds sesame butter tahini from roasted and toasted kernels"
+ },
+ "tamarind paste": {
+  "query": "tamarinds raw"
+ },
+ "thai red curry paste": {
+  "skip": true
+ },
+ "tiger prawn": {
+  "sameAs": "prawn"
+ },
+ "tinned tomato": {
+  "query": "tomatoes red ripe canned packed in tomato juice"
+ },
+ "tomato": {
+  "query": "tomatoes red ripe raw year round average"
+ },
+ "tomato ketchup": {
+  "query": "catsup"
+ },
+ "tomato puree": {
+  "query": "tomato products canned puree without salt added"
+ },
+ "tomato sauce": {
+  "query": "tomato sauce canned no salt added"
+ },
+ "toor dal": {
+  "query": "pigeon peas red gram mature seeds raw"
+ },
+ "tuna": {
+  "query": "fish tuna light canned in water drained solids"
+ },
+ "turmeric": {
+  "query": "spices turmeric ground"
+ },
+ "unsalted beef stock": {
+  "sameAs": "beef stock"
+ },
+ "unsalted butter": {
+  "query": "butter without salt"
+ },
+ "vanilla": {
+  "sameAs": "vanilla extract"
+ },
+ "vegetable oil": {
+  "query": "oil canola"
+ },
+ "vegetable stock": {
+  "query": "soup vegetable broth ready to serve"
+ },
+ "vegetable stock cube": {
+  "sameAs": "chicken stock cube"
+ },
+ "walnut": {
+  "query": "nuts walnuts english"
+ },
+ "warm water": {
+  "sameAs": "water"
+ },
+ "water": {
+  "query": "water tap municipal"
+ },
+ "water chestnut": {
+  "query": "waterchestnuts chinese canned solids and liquids"
+ },
+ "whipping cream": {
+  "sameAs": "heavy cream"
+ },
+ "white cabbage": {
+  "sameAs": "cabbage"
+ },
+ "white fish": {
+  "each": 170,
+  "query": "fish cod atlantic raw"
+ },
+ "white onion": {
+  "sameAs": "onion"
+ },
+ "white pepper": {
+  "query": "spices pepper white"
+ },
+ "white sugar": {
+  "sameAs": "sugar"
+ },
+ "white vinegar": {
+  "sameAs": "vinegar"
+ },
+ "white wine": {
+  "query": "alcoholic beverage wine table white"
+ },
+ "white wine vinegar": {
+  "sameAs": "vinegar"
+ },
+ "whole milk": {
+  "sameAs": "milk"
+ },
+ "worcestershire sauce": {
+  "query": "sauce worcestershire"
+ },
+ "yeast": {
+  "query": "leavening agents yeast baker's active dry"
+ },
+ "yellow onion": {
+  "sameAs": "onion"
+ },
+ "yellow pepper": {
+  "query": "peppers sweet yellow raw"
+ },
+ "yogurt": {
+  "query": "yogurt plain whole milk"
+ },
+ "zucchini": {
+  "sameAs": "courgette"
+ }
+}

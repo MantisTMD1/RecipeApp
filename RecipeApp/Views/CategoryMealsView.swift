@@ -39,26 +39,11 @@ struct CategoryMealsView: View {
             guard diet.allowsCategory(category.name) else { return }
             do {
                 let all = try await MealDBClient.shared.meals(inCategory: category.name)
-                meals = diet.isActive ? await Self.filtered(all, by: diet) : all
+                meals = diet.isActive ? await MealDBClient.shared.meals(all, fitting: diet) : all
                 isLoaded = true
             } catch {
                 errorMessage = error.localizedDescription
             }
-        }
-    }
-
-    /// Category lists only have names, so load each recipe's ingredients to check the diet.
-    private static func filtered(_ summaries: [MealSummary], by diet: DietFilter) async -> [MealSummary] {
-        await withTaskGroup(of: (Int, Bool).self) { group in
-            for (index, summary) in summaries.enumerated() {
-                group.addTask {
-                    let meal = try? await MealDBClient.shared.meal(id: summary.id)
-                    return (index, meal.map(diet.allows) ?? false)
-                }
-            }
-            var keep = Set<Int>()
-            for await (index, ok) in group where ok { keep.insert(index) }
-            return summaries.enumerated().filter { keep.contains($0.offset) }.map(\.element)
         }
     }
 }

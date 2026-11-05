@@ -56,6 +56,8 @@ recipes,cooking,pantry,meal ideas,dinner,shopping list,leftovers,cookbook,vegan,
 
 ## What's New (version 1.3)
 
+- See estimated calories, protein, carbs and more for each recipe
+- Browse recipes by cuisine
 - The app's name on your home screen now matches the App Store: Recipe Rescuer
 
 ## What's New (version 1.2)

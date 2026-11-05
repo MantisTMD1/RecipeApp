@@ -63,6 +63,9 @@ struct HomeView: View {
             .navigationDestination(for: MealCategory.self) { category in
                 CategoryMealsView(category: category)
             }
+            .navigationDestination(for: Cuisine.self) { cuisine in
+                CuisineMealsView(cuisine: cuisine)
+            }
             .navigationDestination(for: MealSummary.self) { meal in
                 MealDetailView(summary: meal)
                     .recipeZoomDestination(id: meal.id)
@@ -152,6 +155,23 @@ struct HomeView: View {
                                 }
                                 .padding(.horizontal)
                             }
+                        }
+                    }
+
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Cuisines")
+                            .font(.title2.bold())
+                            .padding(.horizontal)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 12) {
+                                ForEach(Cuisine.all) { cuisine in
+                                    NavigationLink(value: cuisine) {
+                                        CuisineChip(cuisine: cuisine)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                            }
+                            .padding(.horizontal)
                         }
                     }
 
@@ -362,6 +382,18 @@ private struct CategoryChip: View {
         .padding(.trailing, 14)
         .padding(.vertical, 8)
         .background(.background.secondary, in: .capsule)
+    }
+}
+
+private struct CuisineChip: View {
+    let cuisine: Cuisine
+
+    var body: some View {
+        Text(cuisine.title)
+            .font(.subheadline.weight(.medium))
+            .padding(.horizontal, 16)
+            .padding(.vertical, 12)
+            .background(.background.secondary, in: .capsule)
     }
 }
 

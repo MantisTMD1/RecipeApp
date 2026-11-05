@@ -14,6 +14,7 @@ struct MealDetailView: View {
     @State private var meal: Meal?
     @State private var addedToList = false
     @State private var scale: RecipeScale = .single
+    @State private var servingsAtOriginal: Double?
     @State private var isCooking = false
     @State private var errorMessage: String?
 
@@ -200,6 +201,11 @@ struct MealDetailView: View {
             }
         }
 
+        if let estimate = NutritionEstimate(ingredients: meal.ingredients, instructions: meal.instructions),
+           estimate.isReliable {
+            NutritionCard(estimate: estimate, scale: scale, servings: servingsBinding(for: estimate))
+        }
+
         VStack(alignment: .leading, spacing: 10) {
             Text("Instructions").font(.title2.bold())
             ForEach(Array(meal.steps.enumerated()), id: \.offset) { index, step in
@@ -219,6 +225,16 @@ struct MealDetailView: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(.borderedProminent)
+        }
+    }
+
+    /// The serving count at the current amount, following the amount picker until it's changed by hand.
+    private func servingsBinding(for estimate: NutritionEstimate) -> Binding<Int> {
+        Binding {
+            let original = servingsAtOriginal ?? Double(estimate.defaultServings)
+            return max(Int((original * scale.rawValue).rounded()), 1)
+        } set: { newValue in
+            servingsAtOriginal = Double(newValue) / scale.rawValue
         }
     }
 

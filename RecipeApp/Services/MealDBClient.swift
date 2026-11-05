@@ -24,6 +24,27 @@ struct MealDBClient {
         return response.meals ?? []
     }
 
+    func meals(inCuisine cuisine: Cuisine) async throws -> [MealSummary] {
+        struct Response: Decodable { let meals: [MealSummary]? }
+        let response: Response = try await get("filter.php", query: ["a": cuisine.areaName])
+        return response.meals ?? []
+    }
+
+    /// List endpoints only return names, so load each recipe's ingredients to check the diet.
+    func meals(_ summaries: [MealSummary], fitting diet: DietFilter) async -> [MealSummary] {
+        await withTaskGroup(of: (Int, Bool).self) { group in
+            for (index, summary) in summaries.enumerated() {
+                group.addTask {
+                    let meal = try? await meal(id: summary.id)
+                    return (index, meal.map(diet.allows) ?? false)
+                }
+            }
+            var keep = Set<Int>()
+            for await (index, ok) in group where ok { keep.insert(index) }
+            return summaries.enumerated().filter { keep.contains($0.offset) }.map(\.element)
+        }
+    }
+
     /// Every ingredient TheMealDB knows about (about 1,000).
     func allIngredients() async throws -> [IngredientInfo] {
         struct Response: Decodable { let meals: [IngredientInfo]? }

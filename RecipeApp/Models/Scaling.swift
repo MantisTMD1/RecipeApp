@@ -54,6 +54,20 @@ enum MeasureScaler {
     private static let pattern = try! NSRegularExpression(
         pattern: "^\\s*" + quantity + "(?:\\s*(?:-|–|to)\\s*" + quantity + ")?")
 
+    /// The number at the start of a measure and the text after it. Ranges use their midpoint.
+    static func leadingQuantity(in part: String) -> (value: Double, rest: String)? {
+        let range = NSRange(part.startIndex..., in: part)
+        guard let match = pattern.firstMatch(in: part, range: range),
+              let whole = Range(match.range, in: part),
+              let first = Range(match.range(at: 1), in: part),
+              let low = parse(String(part[first])) else { return nil }
+        var value = low
+        if let second = Range(match.range(at: 2), in: part), let high = parse(String(part[second])) {
+            value = (low + high) / 2
+        }
+        return (value, String(part[whole.upperBound...]))
+    }
+
     private static func scalePart(_ part: String, by factor: Double) -> String {
         let range = NSRange(part.startIndex..., in: part)
         guard let match = pattern.firstMatch(in: part, range: range),
