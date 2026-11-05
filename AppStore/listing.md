@@ -1,4 +1,4 @@
-# Recipe Rescue: App Store Connect listing
+# Recipe Rescuer: App Store Connect listing
 
 Copy these into App Store Connect when you create the app. Character limits are Apple's.
 
@@ -6,7 +6,7 @@ Copy these into App Store Connect when you create the app. Character limits are 
 
 | Field | Value |
 |---|---|
-| Name (30 max) | Recipe Rescue |
+| Name (30 max) | Recipe Rescuer |
 | Subtitle (30 max) | Cook with what you have |
 | Bundle ID | com.mantistmd1.recipes |
 | SKU | recipe-rescue-ios |
@@ -18,11 +18,11 @@ Copy these into App Store Connect when you create the app. Character limits are 
 
 ## Promotional text (170 max)
 
-Not sure what's for dinner? Tell Recipe Rescue what's in your kitchen and get recipes you can make tonight, plus a shopping list for anything you're missing.
+Not sure what's for dinner? Tell Recipe Rescuer what's in your kitchen and get recipes you can make tonight, plus a shopping list for anything you're missing.
 
 ## Description (4,000 max)
 
-Recipe Rescue turns the ingredients you already have into dinner ideas.
+Recipe Rescuer turns the ingredients you already have into dinner ideas.
 
 COOK WITH WHAT YOU HAVE
 Tap what's in your kitchen and hit "What Can I Make?". Recipes are ranked by how few ingredients you're missing, so you can see at a glance what's ready to cook and what needs one quick shop.
@@ -54,6 +54,10 @@ Recipe data from TheMealDB.
 
 recipes,cooking,pantry,meal ideas,dinner,shopping list,leftovers,cookbook,vegan,timer,kitchen
 
+## What's New (version 1.3)
+
+- The app's name on your home screen now matches the App Store: Recipe Rescuer
+
 ## What's New (version 1.2)
 
 - Cooking mode: one big step at a time, with tap-to-start timers
@@ -66,7 +70,7 @@ recipes,cooking,pantry,meal ideas,dinner,shopping list,leftovers,cookbook,vegan,
 
 ## What's New (version 1.1)
 
-- Recipe Rescue now greets you by name. Add or change your name anytime in Settings.
+- Recipe Rescuer now greets you by name. Add or change your name anytime in Settings.
 - A fresh green look to match the app icon.
 - The Done button now stays visible while you search for ingredients.
 

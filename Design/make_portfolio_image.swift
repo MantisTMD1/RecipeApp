@@ -1,4 +1,4 @@
-// Builds a landscape preview image of Recipe Rescue for the portfolio website.
+// Builds a landscape preview image of Recipe Rescuer for the portfolio website.
 // Usage: swift make_portfolio_image.swift <repo-root> <output.jpg>
 import AppKit
 import CoreGraphics
@@ -79,7 +79,7 @@ func drawText(_ text: String, size: CGFloat, weight: NSFont.Weight, alpha: CGFlo
     ]
     NSAttributedString(string: text, attributes: attributes).draw(at: point)
 }
-drawText("Recipe Rescue", size: 72, weight: .heavy, alpha: 1, at: CGPoint(x: 86, y: 370))
+drawText("Recipe Rescuer", size: 72, weight: .heavy, alpha: 1, at: CGPoint(x: 86, y: 370))
 drawText("Cook with what you have.", size: 34, weight: .medium, alpha: 0.9, at: CGPoint(x: 90, y: 318))
 drawText("SwiftUI · SwiftData · iOS", size: 26, weight: .semibold, alpha: 0.75, at: CGPoint(x: 90, y: 200))
 

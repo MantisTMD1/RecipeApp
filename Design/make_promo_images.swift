@@ -125,7 +125,7 @@ do {
     ctx.draw(load("RecipeApp/Assets.xcassets/AppIcon.appiconset/AppIcon.png"), in: iconRect)
     ctx.restoreGState()
 
-    drawText("Recipe Rescue", size: 190, weight: .heavy, alpha: 1, in: CGRect(x: 292, y: 1090, width: 1700, height: 280))
+    drawText("Recipe Rescuer", size: 190, weight: .heavy, alpha: 1, in: CGRect(x: 292, y: 1090, width: 1700, height: 280))
     drawText("Cook with what you have.", size: 104, weight: .medium, alpha: 0.9, in: CGRect(x: 300, y: 880, width: 1700, height: 160))
 
     drawPhone(ctx, load("AppStore/screenshots/2-recipe-ideas.png"), center: CGPoint(x: 2400, y: h / 2), height: 1750)

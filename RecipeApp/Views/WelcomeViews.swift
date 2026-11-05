@@ -19,7 +19,7 @@ struct NamePromptView: View {
                 .foregroundStyle(.tint)
 
             VStack(spacing: 8) {
-                Text("Welcome to Recipe Rescue")
+                Text("Welcome to Recipe Rescuer")
                     .font(.largeTitle.bold())
                     .multilineTextAlignment(.center)
                 Text("What's your name?")

@@ -1,4 +1,4 @@
-# Recipe Rescue
+# Recipe Rescuer
 
 A SwiftUI recipe app for iOS that turns the ingredients you already have into dinner ideas. Recipe data from [TheMealDB](https://www.themealdb.com).
 
