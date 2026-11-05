@@ -39,16 +39,22 @@ Halve, double or triple any recipe and every amount updates, including your shop
 EAT THE WAY YOU EAT
 Vegetarian, vegan, gluten-free and dairy-free filters apply across the whole app.
 
+PLAN YOUR WEEK
+Put recipes on the days you'll cook them, then add everything you're missing to your shopping list in one tap.
+
 SHOP SMARTER
 Add a recipe's missing ingredients to your shopping list in one tap. Check items off as you shop, then move them into your kitchen when you get home.
 
 DISCOVER SOMETHING NEW
-Browse breakfast, lunch, dinner and dessert ideas, see estimated cooking times, and get a fresh feed of recipes from around the world every time you open the app.
+Browse by cuisine or by breakfast, lunch, dinner and dessert, see estimated cooking times and calories, and get a fresh feed of recipes from around the world every time you open the app.
+
+ON ALL YOUR DEVICES
+Your kitchen, saved recipes, shopping list and meal plan stay up to date through your own iCloud account.
 
 PRIVATE BY DESIGN
-No account, no ads, no tracking. Your kitchen, recipes and lists stay on your phone.
+No sign-up, no ads, no tracking. Your data stays on your devices and in your private iCloud, where we can't see it.
 
-Recipe data from TheMealDB.
+Recipe data from TheMealDB. Nutrition estimates use USDA FoodData Central.
 
 ## Keywords (100 max, comma-separated, no spaces needed)
 
@@ -58,9 +64,14 @@ recipes,cooking,pantry,meal ideas,dinner,shopping list,leftovers,cookbook,vegan,
 
 - Meal Plan: plan your week, then add everything you're missing to your shopping list in one tap.
 - iCloud sync: your kitchen, saved recipes, photos, shopping list and meal plan stay up to date across your devices.
+- Nutrition estimates: see calories, protein, carbs and fat per serving on most recipes.
+- Browse recipes by cuisine.
 - Shopping list amounts now add up when two recipes need the same ingredient.
+- Fixed pull-to-refresh on the Home screen and the Quick Add Hide button in Kitchen.
 
 ## What's New (version 1.3)
+
+Not released. Its changes shipped in 1.4.
 
 - See estimated calories, protein, carbs and more for each recipe
 - Browse recipes by cuisine
@@ -101,10 +112,14 @@ No sign-in is required. The app loads recipe data from TheMealDB's public API, s
 
 ## Screenshots
 
-6.9" iPhone screenshots (1320 × 2868) are in `AppStore/screenshots/`. Upload them in this order:
+6.9" iPhone screenshots (1320 × 2868) of version 1.4 are in `AppStore/screenshots/`, in this order:
 
 1. Discover
-2. Recipe ideas from your kitchen
-3. Recipe detail
-4. Shopping list
-5. Kitchen
+2. Meal Plan
+3. Recipe ideas from your kitchen
+4. Recipe detail
+5. Nutrition estimate
+6. Shopping list
+7. Kitchen
+
+App Store Connect's medium iPhone slot takes 1206 × 2622 instead. `AppStore/screenshots/for-1.4-draft/` has the two 1.4 additions at that size, to add to the six already in the draft.
