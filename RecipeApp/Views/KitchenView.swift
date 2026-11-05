@@ -29,9 +29,6 @@ struct KitchenView: View {
         }
     }
 
-    /// Keep offering quick adds while the kitchen is still small.
-    private var showsQuickAdd: Bool { !hideQuickAdd && pantry.count < 10 }
-
     var body: some View {
         NavigationStack {
             List {
@@ -45,15 +42,17 @@ struct KitchenView: View {
                     }
                 }
 
-                if showsQuickAdd && !pantry.isEmpty {
+                if !pantry.isEmpty {
                     Section {
-                        QuickAddChips(items: Self.commonItems, isAdded: isInPantry, toggle: toggleCommon)
-                            .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
+                        if !hideQuickAdd {
+                            QuickAddChips(items: Self.commonItems, isAdded: isInPantry, toggle: toggleCommon)
+                                .listRowInsets(EdgeInsets(top: 12, leading: 12, bottom: 12, trailing: 12))
+                        }
                     } header: {
                         HStack {
                             Text("Quick Add")
                             Spacer()
-                            Button("Hide") { withAnimation { hideQuickAdd = true } }
+                            Button(hideQuickAdd ? "Show" : "Hide") { withAnimation { hideQuickAdd.toggle() } }
                                 .font(.footnote)
                                 .textCase(nil)
                         }

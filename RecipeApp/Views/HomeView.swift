@@ -93,7 +93,9 @@ struct HomeView: View {
                     await loadMealType()
                 }
             }
-            .refreshable { await shuffle() }
+            // SwiftUI cancels a refresh's task when the view updates, which would cancel the
+            // requests partway through, so they run in a task of their own.
+            .refreshable { await Task { await shuffle() }.value }
         }
     }
 

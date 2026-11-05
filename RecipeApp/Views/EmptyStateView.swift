@@ -96,20 +96,24 @@ struct QuickAddChips: View {
                     withAnimation(.snappy) { toggle(item) }
                 } label: {
                     HStack(spacing: 4) {
-                        AsyncImage(url: IngredientInfo(id: "", name: item).thumbnailURL) { image in
-                            image.resizable().scaledToFit()
-                        } placeholder: {
-                            Color.clear
+                        // The checkmark takes the picture's place so the name keeps its full width.
+                        Group {
+                            if added {
+                                Image(systemName: "checkmark")
+                                    .font(.caption.weight(.bold))
+                            } else {
+                                AsyncImage(url: IngredientInfo(id: "", name: item).thumbnailURL) { image in
+                                    image.resizable().scaledToFit()
+                                } placeholder: {
+                                    Color.clear
+                                }
+                            }
                         }
                         .frame(width: 22, height: 22)
                         Text(item)
                             .font(.subheadline.weight(.medium))
                             .lineLimit(1)
                             .minimumScaleFactor(0.75)
-                        if added {
-                            Image(systemName: "checkmark")
-                                .font(.caption.weight(.bold))
-                        }
                     }
                     .padding(.horizontal, 8)
                     .padding(.vertical, 8)
