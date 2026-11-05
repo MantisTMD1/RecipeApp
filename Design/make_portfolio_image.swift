@@ -52,9 +52,9 @@ func drawPhone(_ image: CGImage, center: CGPoint, height phoneHeight: CGFloat) {
 }
 
 // Phones on the right, the middle one raised and in front.
-drawPhone(load("AppStore/screenshots/2-recipe-ideas.png"), center: CGPoint(x: 905, y: 430), height: 690)
-drawPhone(load("AppStore/screenshots/3-recipe-detail.png"), center: CGPoint(x: 1305, y: 430), height: 690)
-drawPhone(load("AppStore/screenshots/1-discover.png"), center: CGPoint(x: 1105, y: 455), height: 760)
+drawPhone(load("AppStore/screenshots-1.2/2-recipe-ideas.png"), center: CGPoint(x: 905, y: 430), height: 690)
+drawPhone(load("AppStore/screenshots-1.2/3-recipe.png"), center: CGPoint(x: 1305, y: 430), height: 690)
+drawPhone(load("AppStore/screenshots-1.2/1-discover.png"), center: CGPoint(x: 1105, y: 455), height: 760)
 
 // Icon and title on the left.
 let icon = load("RecipeApp/Assets.xcassets/AppIcon.appiconset/AppIcon.png")
