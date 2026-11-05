@@ -4,10 +4,10 @@ import SwiftData
 /// A meal the user saved. Only the summary is stored; the full recipe is fetched on demand.
 @Model
 final class FavoriteMeal {
-    @Attribute(.unique) var mealID: String
-    var name: String
+    var mealID: String = ""
+    var name: String = ""
     var thumbnailURL: URL?
-    var dateAdded: Date
+    var dateAdded: Date = Date.now
 
     init(mealID: String, name: String, thumbnailURL: URL?, dateAdded: Date = .now) {
         self.mealID = mealID

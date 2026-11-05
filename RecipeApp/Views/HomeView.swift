@@ -21,6 +21,12 @@ struct HomeView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 28) {
+                    NavigationLink(value: MealPlanRoute.week) {
+                        ThisWeekCard()
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
+
                     MealTypePicker(selection: $mealType)
 
                     if diet.isActive {
@@ -65,6 +71,9 @@ struct HomeView: View {
             }
             .navigationDestination(for: Cuisine.self) { cuisine in
                 CuisineMealsView(cuisine: cuisine)
+            }
+            .navigationDestination(for: MealPlanRoute.self) { _ in
+                MealPlanView()
             }
             .navigationDestination(for: MealSummary.self) { meal in
                 MealDetailView(summary: meal)
@@ -401,7 +410,7 @@ private struct CuisineChip: View {
 
 #Preview {
     HomeView()
-        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self, CustomRecipe.self], inMemory: true)
+        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self, CustomRecipe.self, PlannedMeal.self], inMemory: true)
 }
 
 /// "All · Breakfast · Lunch · Dinner · Dessert" buttons under the title.

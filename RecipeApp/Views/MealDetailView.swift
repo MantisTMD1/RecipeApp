@@ -7,6 +7,7 @@ struct MealDetailView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var matchingFavorites: [FavoriteMeal]
     @Query private var customMatches: [CustomRecipe]
+    @Query(sort: \PlannedMeal.dayKey) private var plannedDays: [PlannedMeal]
     @Environment(\.dismiss) private var dismiss
     @State private var editingRecipe = false
     @Query private var pantry: [PantryItem]
@@ -23,6 +24,7 @@ struct MealDetailView: View {
         let id = summary.id
         _matchingFavorites = Query(filter: #Predicate<FavoriteMeal> { $0.mealID == id })
         _customMatches = Query(filter: #Predicate<CustomRecipe> { $0.recipeID == id })
+        _plannedDays = Query(filter: #Predicate<PlannedMeal> { $0.mealID == id }, sort: \.dayKey)
     }
 
     private var isCustom: Bool { CustomRecipe.isCustom(summary.id) }
@@ -132,6 +134,8 @@ struct MealDetailView: View {
                 CookingModeView(meal: meal, scale: scale)
             }
         }
+
+        AddToPlanMenu(meal: meal, plans: plannedDays)
 
         let matcher = IngredientMatcher(pantry: pantry.map(\.name), assumeStaples: assumeStaples)
         let ingredients = meal.ingredients.map { $0.scaled(by: scale.rawValue) }

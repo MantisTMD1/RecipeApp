@@ -198,7 +198,7 @@ struct RecipeEditorView: View {
         cuisine = recipe.cuisine
         instructions = recipe.instructions
         ingredients = recipe.ingredients.map { EditableIngredient(value: $0) }
-        if let url = recipe.photoURL { photoData = try? Data(contentsOf: url) }
+        photoData = recipe.photoData ?? recipe.photoURL.flatMap { try? Data(contentsOf: $0) }
     }
 
     private func save() {

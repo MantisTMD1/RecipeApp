@@ -1,4 +1,5 @@
 import SwiftUI
+import CloudKit
 
 enum Appearance: String, CaseIterable, Identifiable {
     case dark, light, system
@@ -29,6 +30,20 @@ struct SettingsView: View {
     @AppStorage("assumeStaples") private var assumeStaples = true
     @AppStorage(UserName.storageKey) private var userName = ""
     @AppStorage(DietFilter.storageKey) private var diet = DietFilter()
+    @State private var iCloudStatus: CKAccountStatus?
+
+    private var iCloudFootnote: String {
+        switch iCloudStatus {
+        case .available, nil:
+            "Your kitchen, saved recipes, shopping list and meal plan stay up to date on devices signed in to your iCloud account. Settings stay on each device."
+        case .restricted:
+            "iCloud is restricted on this device. Your data is still saved here."
+        case .temporarilyUnavailable:
+            "iCloud isn't available right now. Your data is still saved here and will sync when it's back."
+        default:
+            "Sign in to iCloud in the Settings app to keep your data up to date across your devices. Your data is still saved here."
+        }
+    }
 
     var body: some View {
         NavigationStack {
@@ -75,10 +90,21 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    LabeledContent("Sync", value: iCloudStatus == .available ? "On" : iCloudStatus == nil ? "Checking…" : "Off")
+                } header: {
+                    Text("iCloud")
+                } footer: {
+                    Text(iCloudFootnote)
+                }
+
+                Section {
                     Link("Recipe data from TheMealDB", destination: URL(string: "https://www.themealdb.com")!)
                 } footer: {
                     Text("Version \(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "")")
                 }
+            }
+            .task {
+                iCloudStatus = (try? await CKContainer(identifier: RecipeStore.cloudContainerID).accountStatus()) ?? .couldNotDetermine
             }
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)

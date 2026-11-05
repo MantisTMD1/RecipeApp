@@ -6,6 +6,8 @@ A SwiftUI recipe app for iOS that turns the ingredients you already have into di
 
 - **Discover:** a featured recipe and a grid of random picks, with shuffle and categories
 - **Kitchen:** add the ingredients you have and get recipe ideas ranked by what you're missing
+- **Meal plan:** plan the week from any recipe and add everything you're missing to the shopping list in one tap
+- **iCloud sync:** your kitchen, saved recipes, shopping list and meal plan stay up to date across your devices
 - **Shopping list:** add missing ingredients from any recipe, check them off, and move them to your kitchen
 - **Your own recipes:** add family recipes with a photo; they work everywhere, including recipe ideas
 - **Cooking mode:** one large step at a time, screen kept awake, tap-to-start timers
@@ -46,6 +48,17 @@ python3 -I Design/build_nutrition.py
 ```
 
 Review `build/nutrition-review.tsv` afterwards and correct any bad matches in `Design/nutrition_overrides.json`.
+
+## Uploading to App Store Connect
+
+The team has no registered devices, so archives are built unsigned. Export takes the app's permissions from the archive's signature, so sign it with the entitlements first or iCloud is lost without any error:
+
+```sh
+xcodebuild -project RecipeApp.xcodeproj -scheme RecipeApp -configuration Release -destination 'generic/platform=iOS' -archivePath build/RecipeApp.xcarchive archive CODE_SIGNING_ALLOWED=NO
+codesign --force --sign - --entitlements RecipeApp.entitlements build/RecipeApp.xcarchive/Products/Applications/RecipeApp.app
+```
+
+After any change to a SwiftData model, publish the new fields: run a Debug build with the `-InitCloudKitSchema` launch argument on a simulator signed in to iCloud, then deploy the schema to Production in the [CloudKit Console](https://icloud.developer.apple.com) before releasing. App Store and TestFlight builds can't sync until this is done, and fields can't be removed once they're in Production.
 
 ## License
 

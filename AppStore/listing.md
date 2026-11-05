@@ -54,6 +54,12 @@ Recipe data from TheMealDB.
 
 recipes,cooking,pantry,meal ideas,dinner,shopping list,leftovers,cookbook,vegan,timer,kitchen
 
+## What's New (version 1.4)
+
+- Meal Plan: plan your week, then add everything you're missing to your shopping list in one tap.
+- iCloud sync: your kitchen, saved recipes, photos, shopping list and meal plan stay up to date across your devices.
+- Shopping list amounts now add up when two recipes need the same ingredient.
+
 ## What's New (version 1.3)
 
 - See estimated calories, protein, carbs and more for each recipe

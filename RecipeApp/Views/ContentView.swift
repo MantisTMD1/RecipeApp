@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import CoreData
 
 enum AppTab: Hashable {
     case home, kitchen, list, saved, search
@@ -10,6 +11,7 @@ struct ContentView: View {
     @AppStorage(UserName.storageKey) private var userName = ""
     @AppStorage("hasOnboarded") private var hasOnboarded = false
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.modelContext) private var modelContext
 
     @State private var greeting: String?
     @State private var wasInBackground = false
@@ -55,7 +57,15 @@ struct ContentView: View {
             }
         }
         // Greet on launch and whenever the app comes back from the background.
-        .task { greetReturningUser() }
+        .task {
+            greetReturningUser()
+            modelContext.reconcileSyncedData()
+        }
+        // Changes from other devices arrive in bursts, so wait for them to settle.
+        .onReceive(NotificationCenter.default.publisher(for: .NSPersistentStoreRemoteChange)
+            .debounce(for: .seconds(2), scheduler: RunLoop.main)) { _ in
+            modelContext.reconcileSyncedData()
+        }
         .onChange(of: scenePhase) { _, phase in
             switch phase {
             case .background:
@@ -90,5 +100,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self, CustomRecipe.self], inMemory: true)
+        .modelContainer(for: [FavoriteMeal.self, PantryItem.self, ShoppingItem.self, CustomRecipe.self, PlannedMeal.self], inMemory: true)
 }

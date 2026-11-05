@@ -2,22 +2,23 @@ import Foundation
 import SwiftData
 import UIKit
 
-/// A recipe the user wrote themselves. Stored only on the device; the photo is a JPEG file
-/// in Application Support so the database stays small.
+/// A recipe the user wrote themselves. The photo syncs through the database, and each device
+/// also keeps it as a JPEG file in Application Support so image views can load it from a URL.
 @Model
 final class CustomRecipe {
     static let idPrefix = "custom-"
 
     /// Same ID space as TheMealDB recipes, so favorites and navigation work unchanged.
-    @Attribute(.unique) var recipeID: String
-    var name: String
+    var recipeID: String = ""
+    var name: String = ""
     var mealTypeRaw: String?
-    var cuisine: String
-    var instructions: String
-    var ingredients: [RecipeIngredient]
+    var cuisine: String = ""
+    var instructions: String = ""
+    var ingredients: [RecipeIngredient] = []
     var photoFilename: String?
-    var dateCreated: Date
-    var dateModified: Date
+    @Attribute(.externalStorage) var photoData: Data?
+    var dateCreated: Date = Date.now
+    var dateModified: Date = Date.now
 
     init(name: String) {
         recipeID = Self.idPrefix + UUID().uuidString
@@ -68,14 +69,37 @@ final class CustomRecipe {
         deletePhotoFile()
         guard let data, let jpeg = Self.resizedJPEG(from: data) else {
             photoFilename = nil
+            photoData = nil
             return
         }
         let filename = "\(UUID().uuidString).jpg"
         do {
             try jpeg.write(to: Self.photosDirectory.appending(path: filename))
             photoFilename = filename
+            photoData = jpeg
         } catch {
             photoFilename = nil
+            photoData = nil
+        }
+    }
+
+    /// Fills in whichever side is missing: photos saved before sync existed have only a file,
+    /// and photos arriving from another device have only data.
+    func reconcilePhoto() {
+        guard let url = photoURL else { return }
+        let hasFile = FileManager.default.fileExists(atPath: url.path)
+        if hasFile {
+            if photoData == nil { photoData = try? Data(contentsOf: url) }
+        } else if let photoData {
+            try? photoData.write(to: url)
+        }
+    }
+
+    /// Clears out photos of recipes that were changed or deleted on another device.
+    static func removeUnusedPhotoFiles(keeping used: Set<String>) {
+        let files = (try? FileManager.default.contentsOfDirectory(at: photosDirectory, includingPropertiesForKeys: nil)) ?? []
+        for file in files where !used.contains(file.lastPathComponent) {
+            try? FileManager.default.removeItem(at: file)
         }
     }
 
@@ -104,11 +128,13 @@ struct RecipeIngredient: Codable, Hashable {
 }
 
 extension ModelContext {
-    /// Deletes a custom recipe, its photo, and any favorite pointing at it.
+    /// Deletes a custom recipe, its photo, and any favorite or plan pointing at it.
     func deleteCustomRecipe(_ recipe: CustomRecipe) {
         let id = recipe.recipeID
         let favorites = (try? fetch(FetchDescriptor<FavoriteMeal>(predicate: #Predicate { $0.mealID == id }))) ?? []
         favorites.forEach(delete)
+        let plans = (try? fetch(FetchDescriptor<PlannedMeal>(predicate: #Predicate { $0.mealID == id }))) ?? []
+        plans.forEach(delete)
         recipe.deletePhotoFile()
         delete(recipe)
     }

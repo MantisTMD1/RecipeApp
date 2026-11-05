@@ -4,8 +4,8 @@ import SwiftData
 /// An ingredient the user has in their kitchen.
 @Model
 final class PantryItem {
-    @Attribute(.unique) var name: String
-    var dateAdded: Date
+    var name: String = ""
+    var dateAdded: Date = Date.now
 
     init(name: String, dateAdded: Date = .now) {
         self.name = name
